@@ -10,14 +10,14 @@
 <style>
 /* === VARIABLES === */
 :root{
-  --cream:#FBF7F1;--ink:#2B2320;--muted:#7C7167;
-  --ember:#B23A23;--ember-dk:#7A2618;
-  --gold:#C8902B;--gold-lt:#F3E7CC;
-  --line:#E7DDD0;--card:#FFFFFF;
-  --vert:#2E7D52;--vert-dk:#1E5638;
+  --cream:#120806;--ink:#f5ede5;--muted:rgba(245,237,229,.58);
+  --ember:#B23A23;--ember-dk:#cf4a28;
+  --gold:#C8902B;--gold-lt:rgba(200,144,43,.15);
+  --line:rgba(255,255,255,.1);--card:rgba(255,255,255,.06);
+  --vert:#2E7D52;--vert-dk:#4dba80;
   --font-serif:'Cormorant Garamond',Georgia,serif;
   --font-sans:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --radius:14px;--shadow:0 2px 16px rgba(43,35,32,.09);
+  --radius:14px;--shadow:0 2px 16px rgba(0,0,0,.4);
 }
 /* === RESET === */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -29,7 +29,7 @@ button{cursor:pointer;font-family:inherit}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* === STICKY HEADER === */
-#main-header{position:sticky;top:0;z-index:100;background:rgba(251,247,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:8px 20px}
+#main-header{position:sticky;top:0;z-index:100;background:rgba(18,8,6,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);padding:8px 20px}
 .header-inner{display:flex;align-items:center;gap:14px;max-width:1200px;margin:0 auto}
 .header-brand{display:flex;align-items:center;gap:8px;font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--ember-dk);white-space:nowrap;text-decoration:none}
 .header-brand svg{width:18px;height:28px;flex-shrink:0}
@@ -40,8 +40,8 @@ button{cursor:pointer;font-family:inherit}
 .v-indicators{display:flex;gap:6px}
 .v-ind{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);font-size:.6875rem;font-weight:700;color:var(--muted);transition:all .3s}
 .v-ind.state-clair{border-color:var(--vert);background:var(--vert);color:#fff}
-.v-ind.state-creuser{border-color:var(--gold);background:var(--gold-lt);color:#7a5a10}
-.v-ind.state-pas-encore{border-color:var(--ember);background:#fdf0ee;color:var(--ember)}
+.v-ind.state-creuser{border-color:var(--gold);background:rgba(200,144,43,.2);color:var(--gold)}
+.v-ind.state-pas-encore{border-color:var(--ember);background:rgba(178,58,35,.2);color:var(--ember)}
 #gl-btn{background:none;border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:.8125rem;color:var(--ink);transition:all .2s;white-space:nowrap}
 #gl-btn:hover{border-color:var(--gold);color:var(--ember-dk)}
 
@@ -80,7 +80,7 @@ button{cursor:pointer;font-family:inherit}
 /* === SECTION HEADERS === */
 .section-header{padding:56px 44px 28px}
 .section-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
-.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;color:var(--ember-dk);line-height:1.15;margin-bottom:14px}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;color:#f5ede5;line-height:1.15;margin-bottom:14px}
 .section-desc{font-size:.9375rem;color:var(--muted);max-width:580px;line-height:1.7}
 .gold-divider{display:flex;align-items:center;gap:18px;padding:0 44px 24px}
 .gold-divider::before,.gold-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
@@ -110,7 +110,7 @@ button{cursor:pointer;font-family:inherit}
 .q-card--verrou .q-note-input{background:rgba(255,255,255,.05);border-color:rgba(200,144,43,.2);color:#f5ede5}
 .q-badge{display:inline-block;font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
 .q-badge--verrou{background:rgba(200,144,43,.2);color:var(--gold);border:1px solid rgba(200,144,43,.3)}
-.q-badge--theme{background:var(--gold-lt);color:var(--ember-dk)}
+.q-badge--theme{background:rgba(200,144,43,.2);color:var(--gold)}
 .q-title{font-family:var(--font-serif);font-size:1.2rem;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:8px}
 .q-detail{font-size:.9375rem;color:var(--muted);line-height:1.65;margin-bottom:18px}
 .q-detail .term{border-bottom:1.5px dotted var(--gold);cursor:help}
@@ -122,15 +122,15 @@ button{cursor:pointer;font-family:inherit}
 .resp-btn .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0;transition:background .18s}
 .resp-btn:hover{border-color:var(--gold);color:var(--ink)}
 .resp-btn:focus-within{outline:2px solid var(--gold);outline-offset:2px}
-.resp-btn.checked-clair{border-color:var(--vert);background:#edf7f2;color:var(--vert-dk)}
+.resp-btn.checked-clair{border-color:var(--vert);background:rgba(46,125,82,.2);color:var(--vert-dk)}
 .resp-btn.checked-clair .dot{background:var(--vert)}
-.resp-btn.checked-creuser{border-color:var(--gold);background:var(--gold-lt);color:#7a5a10}
+.resp-btn.checked-creuser{border-color:var(--gold);background:rgba(200,144,43,.2);color:var(--gold)}
 .resp-btn.checked-creuser .dot{background:var(--gold)}
-.resp-btn.checked-pas-encore{border-color:var(--ember);background:#fdf0ee;color:var(--ember-dk)}
+.resp-btn.checked-pas-encore{border-color:var(--ember);background:rgba(178,58,35,.2);color:var(--ember-dk)}
 .resp-btn.checked-pas-encore .dot{background:var(--ember)}
 
 /* === POURQUOI (visible par défaut) === */
-.q-why{margin-top:14px;background:#f8f4ef;border-radius:10px;padding:14px 18px}
+.q-why{margin-top:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px}
 .q-why-text{font-size:.875rem;color:var(--ink);line-height:1.68}
 .q-change-text{font-size:.8125rem;color:var(--muted);line-height:1.65;margin-top:8px;padding-top:8px;border-top:1px dotted var(--line)}
 .q-card--verrou .q-why{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
@@ -143,12 +143,12 @@ button{cursor:pointer;font-family:inherit}
 /* === NOTE === */
 .q-note-wrap{margin-top:10px}
 .q-note-label{display:block;font-size:.8125rem;color:var(--muted);margin-top:14px;font-weight:600}
-.q-note-reco{color:#7a5a10;font-weight:600}
-.q-note-nudge{display:block;font-size:.75rem;color:#9a6b14;margin-top:6px}
+.q-note-reco{color:var(--gold);font-weight:600}
+.q-note-nudge{display:block;font-size:.75rem;color:var(--gold);margin-top:6px}
 .q-card.needs-note .q-note-input{border-color:var(--gold);background:rgba(200,144,43,.06)}
 .q-card--verrou .q-note-label,.q-card--priere .q-note-label{color:rgba(245,237,229,.72)}
 .q-card--verrou .q-note-reco,.q-card--priere .q-note-reco,.q-card--verrou .q-note-nudge,.q-card--priere .q-note-nudge{color:var(--gold)}
-.q-note-input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 13px;font-family:var(--font-sans);font-size:.875rem;color:var(--ink);background:var(--cream);resize:vertical;transition:border-color .2s;margin-top:6px}
+.q-note-input{width:100%;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 13px;font-family:var(--font-sans);font-size:.875rem;color:var(--ink);background:rgba(255,255,255,.05);resize:vertical;transition:border-color .2s;margin-top:6px}
 .q-note-input:focus{outline:none;border-color:var(--gold)}
 
 /* === GLOSSARY TERMS === */
@@ -210,35 +210,35 @@ button{cursor:pointer;font-family:inherit}
 .sv-id{font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .sv-q{font-family:var(--font-serif);font-size:.9375rem;color:var(--ink);margin-bottom:10px;line-height:1.35}
 .sv-state{font-size:.8125rem;font-weight:700;padding:4px 13px;border-radius:20px;display:inline-block}
-.sv-state.clair{background:#edf7f2;color:var(--vert-dk)}
-.sv-state.creuser{background:var(--gold-lt);color:#7a5a10}
-.sv-state.pas-encore{background:#fdf0ee;color:var(--ember-dk)}
-.sv-state.unknown{background:var(--line);color:var(--muted)}
-.synthese-alert{display:none;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:10px;padding:14px 18px;margin-top:20px;color:var(--ember-dk);font-size:.9375rem;line-height:1.55}
+.sv-state.clair{background:rgba(46,125,82,.2);color:var(--vert-dk)}
+.sv-state.creuser{background:rgba(200,144,43,.2);color:var(--gold)}
+.sv-state.pas-encore{background:rgba(178,58,35,.2);color:var(--ember-dk)}
+.sv-state.unknown{background:rgba(255,255,255,.1);color:var(--muted)}
+.synthese-alert{display:none;background:rgba(178,58,35,.12);border:1.5px solid rgba(178,58,35,.4);border-radius:10px;padding:14px 18px;margin-top:20px;color:rgba(245,237,229,.85);font-size:.9375rem;line-height:1.55}
 .synthese-alert.visible{display:block}
 .synthese-overview{margin-top:36px}
-.synthese-overview h3{font-family:var(--font-serif);font-size:1.25rem;color:var(--ember-dk);margin-bottom:18px}
+.synthese-overview h3{font-family:var(--font-serif);font-size:1.25rem;color:#f5ede5;margin-bottom:18px}
 .tpr-row{display:flex;align-items:center;gap:14px;font-size:.875rem;margin-bottom:10px}
 .tpr-label{min-width:170px;color:var(--muted)}
 .tpr-bar{flex:1;height:6px;background:var(--line);border-radius:4px;overflow:hidden}
 .tpr-fill{height:100%;border-radius:4px;background:var(--vert);transition:width .5s ease}
 .tpr-count{font-size:.8rem;color:var(--muted);white-space:nowrap}
 .synthese-diagram{margin-top:44px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
-.synthese-diagram h3{font-family:var(--font-serif);font-size:1.375rem;color:var(--ember-dk);margin-bottom:18px}
+.synthese-diagram h3{font-family:var(--font-serif);font-size:1.375rem;color:#f5ede5;margin-bottom:18px}
 .diag-step{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
 .diag-step:last-child{border-bottom:none}
 .diag-num{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--ember-dk);color:#fff;font-family:var(--font-serif);font-weight:600;font-size:.9375rem;flex-shrink:0}
 .diag-connector{padding:2px 0 2px 22px;color:var(--gold);font-size:1rem}
 .diag-content h4{font-family:var(--font-serif);font-size:1rem;color:var(--ink);margin-bottom:3px}
 .diag-content p{font-size:.875rem;color:var(--muted);line-height:1.55}
-.diag-warning{font-size:.8125rem;color:var(--ember-dk);background:#fdf0ee;border-radius:6px;padding:6px 10px;margin-top:5px;display:inline-block}
+.diag-warning{font-size:.8125rem;color:var(--ember-dk);background:rgba(178,58,35,.15);border-radius:6px;padding:6px 10px;margin-top:5px;display:inline-block}
 .synthese-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
 .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--ember-dk);color:#fff;border:none;border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:background .2s,transform .2s}
 .btn-primary:hover{background:var(--ember);transform:translateY(-1px)}
 .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--muted);border:1.5px solid var(--line);border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:all .2s}
 .btn-secondary:hover{border-color:var(--ember);color:var(--ember-dk)}
 .btn-danger{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--muted);border:1.5px solid var(--line);border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:all .2s}
-.btn-danger:hover{border-color:var(--ember);background:#fdf0ee;color:var(--ember-dk)}
+.btn-danger:hover{border-color:var(--ember);background:rgba(178,58,35,.2);color:var(--ember-dk)}
 
 /* === FOOTER === */
 .site-footer{border-top:1px solid var(--line);padding:20px 44px;background:var(--cream)}
@@ -314,7 +314,7 @@ button{cursor:pointer;font-family:inherit}
 /* === PRINT === */
 @media print{
   #main-header,#section-nav,#gl-drawer,#gl-overlay,#term-tooltip,
-  #welcome-screen,.hero-section,.synthese-actions,.synthese-share,#gl-btn,.q-note-toggle+div[hidden]
+  #welcome-screen,.hero-section,.synthese-actions,#gl-btn,.q-note-toggle+div[hidden]
   {display:none!important}
   body{font-size:11pt;background:#fff;color:#000}
   .layout{display:block}
@@ -375,9 +375,9 @@ button{cursor:pointer;font-family:inherit}
       <p>Répondre honnêtement, idéalement <strong>à plusieurs</strong> (porteur, conseil, accompagnateur spirituel), sans se précipiter. Comptez <strong>environ 30&nbsp;min</strong> pour un premier passage&nbsp;; vous pouvez le faire <strong>en plusieurs fois</strong>, votre progression est enregistrée. Commencer par les <strong>3 questions verrou</strong>&nbsp;: tant qu'elles n'ont pas de réponse claire, on n'engage rien.</p>
       <p style="margin-top:14px"><strong>À chaque question, précisez votre réponse</strong> dans la note prévue&nbsp;: si c'est clair, dites <em>laquelle</em>&nbsp;; sinon, dites ce qui reste à creuser. C'est là qu'est le vrai discernement.</p>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#edf7f2;border:1.5px solid var(--vert);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--vert-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>C'est clair</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:var(--gold-lt);border:1.5px solid var(--gold);border-radius:20px;font-size:.78rem;font-weight:700;color:#7a5a10"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>À approfondir</span>
-        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--ember-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--ember);display:inline-block"></span>Pas encore mûr</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(46,125,82,.25);border:1.5px solid var(--vert);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--vert-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>C'est clair</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(200,144,43,.25);border:1.5px solid var(--gold);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--gold)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>À approfondir</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(178,58,35,.25);border:1.5px solid var(--ember);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--ember-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--ember);display:inline-block"></span>Pas encore mûr</span>
       </div>
     </div>
     <div id="welcome-name-section">
@@ -436,8 +436,6 @@ button{cursor:pointer;font-family:inherit}
     <a href="#theme-2" class="snav-item" data-target="theme-2"><span class="snav-dot"></span>2&nbsp;· L'Église</a>
     <a href="#theme-3" class="snav-item" data-target="theme-3"><span class="snav-dot"></span>3&nbsp;· Structure</a>
     <a href="#theme-4" class="snav-item" data-target="theme-4"><span class="snav-dot"></span>4&nbsp;· Modèle économique</a>
-    <a href="#theme-5" class="snav-item" data-target="theme-5"><span class="snav-dot"></span>5&nbsp;· Protection</a>
-    <a href="#theme-6" class="snav-item" data-target="theme-6"><span class="snav-dot"></span>6&nbsp;· Porteur</a>
     <a href="#priere" class="snav-item" data-target="priere"><span class="snav-dot"></span>Dans la prière</a>
     <a href="#synthese" class="snav-item" data-target="synthese"><span class="snav-dot"></span>Synthèse</a>
   </nav>
@@ -449,8 +447,6 @@ button{cursor:pointer;font-family:inherit}
     <section id="theme-2" class="theme-section"></section>
     <section id="theme-3" class="theme-section"></section>
     <section id="theme-4" class="theme-section"></section>
-    <section id="theme-5" class="theme-section"></section>
-    <section id="theme-6" class="theme-section"></section>
     <section id="priere"  class="priere-section"></section>
     <section id="synthese" class="synthese-section"></section>
   </main>
@@ -786,61 +782,6 @@ const THEMES = [
         pourquoi:'Si ce poste a été intégré dans les projections, il faut le retirer — sinon les chiffres sont surestimés. En revanche, d\'autres aides restent accessibles aux non-lucratifs&nbsp;: subventions DRAC, Fondation du patrimoine, Loto du patrimoine. Ce sont ces pistes qui méritent d\'être valorisées.',
         change:'Vérifier que le plan de financement ne fait pas reposer d\'économie sur cet avantage fiscal, et lister les aides publiques réellement disponibles pour le type de structure retenu.' }
     ]
-  },
-  { id:'theme-5', num:'5', label:'Thème 5', title:'La protection des personnes et la conformité', duree:'~8 min',
-    desc:'Ces questions protègent les personnes — les enfants, les résidents, les salariés — et par là-même le projet. Les anticiper tôt est bien moins coûteux que de les découvrir tard.',
-    questions:[
-      { id:'5-1',
-        question:'Comment qualifier l\'offre de garde d\'enfants pour qu\'elle soit conforme et bien intégrée dans le BP&nbsp;?',
-        detail:'Dès lors que des enfants sont gardés en groupe pendant que leurs parents coworkent ou se reposent, on entre dans le cadre réglementé de l\'<span class="term" data-key="acm">Accueil Collectif de Mineurs</span> (déclaration SDJES, encadrants BAFA/BAFD, PMI pour les moins de 6 ans).',
-        pourquoi:'Ce cadre n\'est pas un obstacle, c\'est un cadre sécurisant — pour les enfants et pour le projet. Le qualifier par avance permet de dimensionner correctement les coûts RH et d\'assurance dans le BP, et d\'éviter toute ambiguïté dans la communication aux familles. La qualification formelle par l\'administration est aussi une forme de validation qui renforce la crédibilité de l\'offre.',
-        change:'Solliciter la SDJES (Direction Départementale) pour une qualification écrite avant toute communication publique sur cet aspect. Intégrer les coûts réels dans les projections financières du segment familles.' },
-      { id:'5-2',
-        question:'La politique de protection des mineurs est-elle documentée et opérationnelle avant l\'accueil du premier enfant&nbsp;?',
-        detail:'Vérification d\'honorabilité (casier judiciaire B2, fichier FIJAISV) pour tous les salariés, bénévoles et résidents en contact avec des enfants. Référent, formation, règles de présence. Niveau diocésain de <span class="term" data-key="safeguarding">safeguarding</span>.',
-        pourquoi:'Dans un lieu catholique, la politique de protection des enfants est d\'une importance particulière depuis les recommandations de la CIASE. Elle protège les enfants accueillis, les familles qui font confiance au lieu, les bénévoles et salariés, et le projet lui-même. Ce n\'est pas une ligne de plus dans un règlement — c\'est un engagement qui doit être visible et vérifié.',
-        change:'Rédiger la politique de protection avant l\'ouverture, nommer un référent, former l\'équipe, et communiquer cette politique aux familles comme une preuve de sérieux. S\'appuyer sur les ressources et les référentiels diocésains disponibles.' },
-      { id:'5-3',
-        question:'Le cadre juridique des résidents est-il sécurisé — pour eux et pour le projet&nbsp;?',
-        detail:'Le risque juridique est triple&nbsp;: requalification en salariat (URSSAF), requalification du logement en bail d\'habitation loi 89 (occupants quasi-inexpulsables), ou avantage en nature non déclaré.',
-        pourquoi:'Les résidents sont à la fois une force humaine et un point de fragilité juridique si leur cadre n\'est pas clair. Un cadre bien conçu (convention d\'occupation à titre précaire, séparation des rôles) protège tout le monde — les résidents, qui savent à quoi ils s\'engagent, et le projet, qui peut faire confiance à un cadre stable. Ce travail demande l\'intervention d\'un avocat spécialisé, mais il est simple à faire une fois qu\'on sait ce qu\'on veut.',
-        change:'Rédiger avec un avocat une convention-type pour les résidents avant tout recrutement. La clarté du cadre est aussi ce qui attire les bons profils.' },
-      { id:'5-4',
-        question:'Comment organiser les activités commerciales (familles, coworking, garde) pour protéger le statut non lucratif du fonds de dotation&nbsp;?',
-        detail:'Plus les activités commerciales sont importantes à l\'intérieur de la structure non lucrative, plus le risque de <span class="term" data-key="requalification">requalification</span> fiscale augmente. La règle des 4P (Produit, Public, Prix, Publicité) permet d\'évaluer si une activité reste dans le champ non lucratif.',
-        pourquoi:'La <span class="term" data-key="sectorisation">sectorisation ou filialisation</span> des activités commerciales dans une entité distincte (association 1901 ou SAS d\'exploitation) est la solution naturelle. Elle protège le statut fiscal du fonds de dotation — et donc les <span class="term" data-key="mecenat">reçus fiscaux</span> — tout en permettant de développer librement les activités commerciales dans la structure adaptée. C\'est une organisation courante, bien connue des juristes spécialisés.',
-        change:'Définir avec l\'expert-comptable et le juriste quelles activités restent dans le fonds et lesquelles sont portées par l\'exploitation. Un <span class="term" data-key="rescrit">rescrit fiscal</span> sécurise l\'ensemble avant le démarrage.' },
-      { id:'5-5',
-        question:'Le plan des locaux intègre-t-il un zonage qui sépare les différents usages et protège chaque groupe&nbsp;?',
-        detail:'Séparer physiquement les espaces réservés aux retraitants (silence), aux familles (vie animée), aux résidents (privé) et aux zones cultuelles est à la fois une exigence de <span class="term" data-key="safeguarding">safeguarding</span> et la condition de la complémentarité saisonnière.',
-        pourquoi:'Un bon plan de lieu résout beaucoup de problèmes à la fois. Il permet à des retraitants de vivre dans le silence même quand des familles sont présentes dans une autre aile. Il sépare physiquement les mineurs des adultes non qualifiés. Et il donne à chacun un espace clairement identifié. Ce zonage est à considérer comme un critère de choix du bien, pas comme une adaptation ultérieure.',
-        change:'Faire analyser le plan du lieu pressenti (ou de tout lieu candidat) à la lumière de ce zonage, idéalement avec un architecte et un référent safeguarding, dès le pré-diagnostic.' }
-    ]
-  },
-  { id:'theme-6', num:'6', label:'Thème 6', title:'Le porteur et la gouvernance', duree:'~8 min',
-    desc:'Ces questions aident le porteur à se situer honnêtement, à identifier ce qu\'il lui faut compléter, et à construire une gouvernance qui protège tout le monde.',
-    questions:[
-      { id:'6-1',
-        question:'La triple légitimité — spirituelle, gestionnaire, ecclésiale — est-elle réunie, ou comment la compléter&nbsp;?',
-        detail:'Diriger un lieu d\'Église qui accueille, emploie des salariés et porte un mécénat suppose trois compétences rarement réunies chez une seule personne.',
-        pourquoi:'Identifier honnêtement ce qui est bien couvert et ce qui manque n\'est pas une remise en cause du porteur — c\'est une base saine pour compléter l\'équipe. Une double compétence (porteur + directeur d\'exploitation aguerri) est souvent plus solide qu\'une compétence unique. De même, un accompagnement spirituel extérieur et un ancrage ecclésial identifié compensent ce qui ne peut venir que de l\'institution.',
-        change:'Dresser une carte honnête des forces et des manques, puis nommer les personnes ou institutions qui pourraient compléter l\'équipe de direction et d\'accompagnement.' },
-      { id:'6-2',
-        question:'L\'autorité spirituelle est-elle bien séparée de la direction économique — pour protéger tous ceux qui vivront sous ce toit&nbsp;?',
-        detail:'Quand une même personne est à la fois responsable économique et figure spirituelle d\'une communauté qui vit, travaille et se loge sous son autorité, la confusion des rôles peut créer des situations difficiles — pour les résidents, pour les salariés, et pour le porteur lui-même.',
-        pourquoi:'Confier la dimension spirituelle au <span class="term" data-key="diocese">diocèse</span> (un aumônier, une convention avec l\'évêché) et garder la direction économique clairement distincte est une protection pour tout le monde. Ce n\'est pas une perte de sens ou d\'identité — c\'est ce qui permet à chacun d\'être à sa place et d\'exercer son rôle en confiance. Les lieux les mieux organisés dans l\'Église fonctionnent avec cette séparation.',
-        change:'Structurer cette séparation dès la conception du projet, en nommant qui exerce quelle autorité, et en la formalisant dans les statuts et les conventions.' },
-      { id:'6-3',
-        question:'La rémunération du porteur est-elle logée dans la bonne structure pour préserver la <span class="term" data-key="gestion-desinteressee">gestion désintéressée</span>&nbsp;?',
-        detail:'Si le porteur dirige et se rémunère tout en contrôlant le <span class="term" data-key="fonds-dotation">fonds de dotation</span>, le statut de <span class="term" data-key="gestion-desinteressee">gestion désintéressée</span> peut être remis en cause — ce qui fait perdre l\'exonération fiscale et peut constituer une <span class="term" data-key="gestion-fait">gestion de fait</span>.',
-        pourquoi:'La solution est simple et bien connue&nbsp;: loger la rémunération du porteur dans la structure d\'exploitation (association 1901 ou SAS), séparée du fonds de dotation. Le porteur peut tout à fait être salarié de l\'exploitation tout en étant bénévole dirigeant du fonds. C\'est une organisation courante et reconnue.',
-        change:'Vérifier ce point avec l\'expert-comptable lors de la rédaction des statuts. C\'est une décision à prendre une fois au démarrage, pas à corriger en cours de route.' },
-      { id:'6-4',
-        question:'La gouvernance prévoit-elle des contre-pouvoirs réels et une organisation en cas d\'absence ou de coup dur&nbsp;?',
-        detail:'Un projet porté par une seule personne, sans suppléance ni conseil actif, est exposé à un point de défaillance unique — que ce soit une maladie, un désaccord ou une crise.',
-        pourquoi:'Un conseil d\'administration ou un comité de gouvernance actif (pas de façade) est d\'abord une protection pour le porteur lui-même. Il distribue les responsabilités, apporte des perspectives différentes, et garantit la continuité du projet si quelque chose arrive. Pour les mécènes et la congrégation, c\'est aussi un signe de maturité institutionnelle qui renforce la confiance.',
-        change:'Nommer les personnes qui siégeront au conseil, définir leur rôle réel, et prévoir explicitement ce qui se passerait si le porteur devait s\'arrêter temporairement ou définitivement.' }
-    ]
   }
 ];
 
@@ -992,27 +933,27 @@ function renderSynthese() {
     </div>
   </div>
 </div>
-<div class="synthese-share" style="max-width:760px;margin:8px auto 24px;padding:24px 26px;background:rgba(200,144,43,.07);border:1px solid rgba(200,144,43,.28);border-radius:14px">
-  <h3 style="font-family:var(--font-serif);color:var(--ember-dk);font-size:1.25rem;margin:0 0 8px">Envoyer mes réponses</h3>
-  <p style="font-size:.875rem;color:var(--muted);line-height:1.6;margin:0 0 16px">Vos réponses restent sur votre appareil&nbsp;— rien n'est envoyé automatiquement. Choisissez comment les transmettre&nbsp;:</p>
-  <div id="synth-name-display">Chargement…</div>
-  <div class="share-buttons-row" style="display:flex;flex-wrap:wrap;gap:10px">
-    <button class="btn-primary" onclick="sendByEmail()">&#9993;&nbsp; Envoyer par email</button>
-    <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="downloadRecap()">&#8595;&nbsp; Télécharger (.txt)</button>
-    <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="copyRecap()">&#10697;&nbsp; Copier</button>
-  </div>
-  <p id="share-feedback" aria-live="polite" style="font-size:.8125rem;line-height:1.5;margin:14px 0 0;min-height:1em;color:var(--vert-dk)"></p>
+<div class="synthese-valider" style="margin-top:32px;text-align:center;padding:24px;background:rgba(46,125,82,.08);border:1px solid rgba(46,125,82,.32);border-radius:14px">
+  <p style="font-size:.9rem;color:var(--muted);margin-bottom:14px;line-height:1.6">Quand vous avez pris le temps de répondre, validez votre discernement.</p>
+  <button class="btn-primary" id="valider-btn" onclick="validerReponses()" style="font-size:1.0625rem;padding:14px 30px">&#10003;&nbsp; Valider mes réponses</button>
+  <p id="valider-feedback" aria-live="polite" style="font-size:.9rem;color:var(--vert-dk);margin-top:14px;min-height:1.2em;font-weight:600;line-height:1.6"></p>
 </div>
 <div class="synthese-actions">
+  <button class="btn-primary" onclick="downloadRecap()">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v8M4 7l4 5 4-5M2 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Télécharger mes réponses (.txt)
+  </button>
   <button class="btn-primary" onclick="window.print()">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 9h8v5H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    Imprimer / Exporter PDF
+    Exporter en PDF
   </button>
   <button class="btn-danger" id="reset-btn">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8a5 5 0 1 1 1.5 3.6M3 12V8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Réinitialiser
   </button>
-</div>`;
+</div>
+<p id="share-feedback" aria-live="polite" style="font-size:.8125rem;color:var(--vert-dk);margin-top:10px;min-height:1.2em"></p>
+<p style="font-size:.8125rem;color:var(--muted);margin-top:12px;line-height:1.6">Une fois téléchargé, transmettez le fichier à <strong style="color:var(--gold)">benoit.decuyper@gmail.com</strong>.</p>`;
 }
 
 /* === ENVOI DES RÉPONSES (sans serveur) === */
@@ -1172,6 +1113,34 @@ function restoreAllAnswers() {
 }
 
 /* === PROGRESS === */
+function validerReponses() {
+  const all = getAllQids();
+  const missing = all.length - all.filter(id => STATE.answers[id]).length;
+  if (missing > 0) {
+    if (!confirm('Il reste ' + missing + ' question(s) sans réponse. Valider quand même ?')) return;
+  }
+  STATE.validated = true;
+  saveState(STATE);
+  showValiderConfirmed();
+  const fb = document.getElementById('valider-feedback');
+  if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function showValiderConfirmed() {
+  const all = getAllQids();
+  const missing = all.length - all.filter(id => STATE.answers[id]).length;
+  const btn = document.getElementById('valider-btn');
+  const fb = document.getElementById('valider-feedback');
+  if (btn) {
+    btn.innerHTML = '&#10003;&nbsp; Réponses validées';
+    btn.style.background = 'var(--vert)';
+    btn.style.borderColor = 'var(--vert)';
+  }
+  if (fb) {
+    fb.innerHTML = 'Merci, vos réponses sont validées' + (missing > 0 ? ' (' + missing + ' sans réponse)' : '') + '. Téléchargez-les ci-dessous, puis envoyez le fichier à <strong style="color:var(--gold)">benoit.decuyper@gmail.com</strong>.';
+  }
+}
+
 function getAllQids() {
   const ids = [];
   VERROUS.forEach(v => ids.push(v.id));
@@ -1257,7 +1226,7 @@ function updateSynthese() {
 
 /* === SIDEBAR NAV HIGHLIGHT === */
 function updateSidebarNav() {
-  const sections = ['verrous','theme-1','theme-2','theme-3','theme-4','theme-5','theme-6','priere','synthese'];
+  const sections = ['verrous','theme-1','theme-2','theme-3','theme-4','priere','synthese'];
   const navItems = document.querySelectorAll('.snav-item');
   let current = sections[0];
   sections.forEach(id => {
@@ -1521,6 +1490,7 @@ function init() {
   updateProgress();
   updateVerrouIndicators();
   updateSynthese();
+  if (STATE.validated) showValiderConfirmed();
 
   // Pré-remplir le champ nom de l'accueil
   const nameInput = document.getElementById('resp-name');
