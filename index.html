@@ -249,6 +249,17 @@ button{cursor:pointer;font-family:inherit}
 .fade-up{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 
+/* === WELCOME SCREEN === */
+#questionnaire-body{display:none}
+#welcome-name-section{margin:20px auto 26px;max-width:380px;text-align:left}
+#welcome-name-section label{display:block;font-size:.9375rem;color:rgba(255,255,255,.85);font-weight:600;margin-bottom:8px}
+#resp-name{display:block;width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-family:var(--font-sans);font-size:1rem;transition:border-color .2s}
+#resp-name::placeholder{color:rgba(255,255,255,.38)}
+#resp-name:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.15)}
+#name-error{display:block;font-size:.8125rem;color:#ffd0c0;margin-top:6px;min-height:1.2em}
+#synth-name-display{font-size:.875rem;color:var(--ink);margin-bottom:16px;padding:10px 14px;background:var(--gold-lt);border-radius:8px;border:1px solid rgba(200,144,43,.3);line-height:1.5}
+#synth-name-display a{color:var(--ember-dk);font-size:.8125rem;margin-left:8px;white-space:nowrap}
+
 /* === RESPONSIVE === */
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
@@ -257,17 +268,53 @@ button{cursor:pointer;font-family:inherit}
   .gold-divider{padding-left:20px;padding-right:20px}
   .synthese-verrous{grid-template-columns:1fr}
 }
-@media(max-width:600px){
+@media(max-width:640px){
+  html,body{overflow-x:hidden}
+  /* Header compact */
+  #main-header{padding:6px 12px}
+  .header-inner{gap:7px}
   .header-brand span{display:none}
-  .v-indicators{display:none}
-  .hero-title{font-size:2.75rem}
-  .hero-section{padding:60px 24px}
+  .v-ind{width:22px;height:22px;font-size:.5625rem}
+  .v-indicators{gap:3px}
+  #progress-label{font-size:.6875rem}
+  #gl-btn{padding:4px 9px;font-size:.75rem}
+  /* Welcome / hero */
+  .hero-section{padding:40px 16px 32px}
+  .hero-title{font-size:clamp(2rem,8vw,2.75rem)}
+  .hero-box{padding:14px 16px}
+  .hero-sub{font-size:.9375rem}
+  #welcome-name-section{max-width:100%}
+  /* Section headers */
+  .section-header{padding:28px 16px 16px}
+  .section-title{font-size:clamp(1.375rem,5vw,1.75rem)}
+  /* Sections inner padding */
+  .questions-wrap{padding-left:16px;padding-right:16px;gap:14px}
+  .verrous-section{padding:32px 16px}
+  .verrous-grid{padding-left:0!important;padding-right:0!important}
+  .priere-section{padding:40px 16px}
+  .synthese-section{padding:36px 16px 48px}
+  .gold-divider{padding-left:16px;padding-right:16px}
+  .synthese-diagram{padding:18px 14px}
+  .synthese-share{padding:18px 16px!important}
+  /* Question cards */
+  .q-card{padding:18px 14px}
+  .q-responses{flex-direction:column;gap:8px}
+  .resp-btn{min-height:44px;width:100%;justify-content:flex-start;border-radius:10px}
+  .q-note-input{width:100%}
+  /* Tooltip width on mobile */
+  #term-tooltip{max-width:min(300px,calc(100vw - 24px))!important}
+  /* Send buttons stack */
+  .share-buttons-row{flex-direction:column!important}
+  .share-buttons-row .btn-primary{width:100%;justify-content:center!important}
+  /* Bottom actions stack */
+  .synthese-actions{flex-direction:column;gap:10px}
+  .synthese-actions>*{width:100%;justify-content:center}
 }
 
 /* === PRINT === */
 @media print{
   #main-header,#section-nav,#gl-drawer,#gl-overlay,#term-tooltip,
-  .hero-section,.synthese-actions,.synthese-share,#gl-btn,.q-note-toggle+div[hidden]
+  #welcome-screen,.hero-section,.synthese-actions,.synthese-share,#gl-btn,.q-note-toggle+div[hidden]
   {display:none!important}
   body{font-size:11pt;background:#fff;color:#000}
   .layout{display:block}
@@ -299,6 +346,54 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- TOOLTIP -->
 <div id="term-tooltip" role="tooltip" aria-hidden="true"></div>
+
+<!-- WELCOME SCREEN -->
+<section id="welcome-screen" class="hero-section" aria-label="Accueil — questionnaire de discernement">
+  <div class="hero-content">
+    <svg class="flame-hero" viewBox="0 0 52 76" fill="none" aria-hidden="true">
+      <path class="fl-outer" d="M26 3C26 3 46 22 46 42C46 56 37 68 26 73C15 68 6 56 6 42C6 22 26 3 26 3Z" fill="url(#wfg1)"/>
+      <path class="fl-inner" d="M26 28C26 28 36 38 36 48C36 56 31.5 63 26 66C20.5 63 16 56 16 48C16 38 26 28 26 28Z" fill="url(#wfg2)"/>
+      <ellipse cx="26" cy="60" rx="5" ry="6" fill="#F5D76E" opacity=".85"/>
+      <defs>
+        <linearGradient id="wfg1" x1="26" y1="3" x2="26" y2="73" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#C8902B" stop-opacity=".9"/>
+          <stop offset="55%" stop-color="#B23A23"/>
+          <stop offset="100%" stop-color="#7A2618"/>
+        </linearGradient>
+        <linearGradient id="wfg2" x1="26" y1="28" x2="26" y2="66" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#F5C842"/>
+          <stop offset="100%" stop-color="#C8902B"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <p class="hero-label">Outil de discernement interne</p>
+    <h1 class="hero-title">Foyer<br><em>de feu</em></h1>
+    <p class="hero-sub">Un support de discernement au sens fort — pour faire émerger la vérité du projet&nbsp;: ce qui est appel et ce qui est désir, ce qui est solide et ce qui est fragile.</p>
+    <div class="hero-box">
+      <p style="font-family:var(--font-serif);font-size:1.1875rem;color:var(--gold);margin-bottom:8px;font-weight:600">Comment utiliser ce questionnaire</p>
+      <p>Ce n'est pas un questionnaire à cocher pour valider un projet — c'est un <strong>outil de discernement</strong>&nbsp;: il aide à y voir clair, à nommer ce qui est solide et ce qui reste à construire. Il n'y a pas de bonne ou de mauvaise réponse.</p>
+      <p>Répondre honnêtement, idéalement <strong>à plusieurs</strong> (porteur, conseil, accompagnateur spirituel), sans se précipiter. Comptez <strong>environ 30&nbsp;min</strong> pour un premier passage&nbsp;; vous pouvez le faire <strong>en plusieurs fois</strong>, votre progression est enregistrée. Commencer par les <strong>3 questions verrou</strong>&nbsp;: tant qu'elles n'ont pas de réponse claire, on n'engage rien.</p>
+      <p style="margin-top:14px"><strong>À chaque question, précisez votre réponse</strong> dans la note prévue&nbsp;: si c'est clair, dites <em>laquelle</em>&nbsp;; sinon, dites ce qui reste à creuser. C'est là qu'est le vrai discernement.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#edf7f2;border:1.5px solid var(--vert);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--vert-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>C'est clair</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:var(--gold-lt);border:1.5px solid var(--gold);border-radius:20px;font-size:.78rem;font-weight:700;color:#7a5a10"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>À approfondir</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--ember-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--ember);display:inline-block"></span>Pas encore mûr</span>
+      </div>
+    </div>
+    <div id="welcome-name-section">
+      <label for="resp-name">Votre nom <span style="font-weight:400;color:rgba(255,255,255,.55)">(prénom et nom)</span></label>
+      <input type="text" id="resp-name" placeholder="Marie Dupont" autocomplete="name" aria-required="true">
+      <span id="name-error" role="alert"></span>
+    </div>
+    <button class="hero-cta" id="start-btn" onclick="startQuestionnaire()">
+      Commencer le discernement
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- QUESTIONNAIRE (masqué jusqu'à la saisie du nom) -->
+<div id="questionnaire-body">
 
 <!-- STICKY HEADER -->
 <header id="main-header">
@@ -349,44 +444,6 @@ button{cursor:pointer;font-family:inherit}
 
   <!-- MAIN -->
   <main id="main-content">
-    <section id="hero" class="hero-section">
-      <div class="hero-content">
-        <svg class="flame-hero" viewBox="0 0 52 76" fill="none" aria-hidden="true">
-          <path class="fl-outer" d="M26 3C26 3 46 22 46 42C46 56 37 68 26 73C15 68 6 56 6 42C6 22 26 3 26 3Z" fill="url(#fg1)"/>
-          <path class="fl-inner" d="M26 28C26 28 36 38 36 48C36 56 31.5 63 26 66C20.5 63 16 56 16 48C16 38 26 28 26 28Z" fill="url(#fg2)"/>
-          <ellipse cx="26" cy="60" rx="5" ry="6" fill="#F5D76E" opacity=".85"/>
-          <defs>
-            <linearGradient id="fg1" x1="26" y1="3" x2="26" y2="73" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#C8902B" stop-opacity=".9"/>
-              <stop offset="55%" stop-color="#B23A23"/>
-              <stop offset="100%" stop-color="#7A2618"/>
-            </linearGradient>
-            <linearGradient id="fg2" x1="26" y1="28" x2="26" y2="66" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#F5C842"/>
-              <stop offset="100%" stop-color="#C8902B"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <p class="hero-label">Outil de discernement interne</p>
-        <h1 class="hero-title">Foyer<br><em>de feu</em></h1>
-        <p class="hero-sub">Un support de discernement au sens fort — pour faire émerger la vérité du projet&nbsp;: ce qui est appel et ce qui est désir, ce qui est solide et ce qui est fragile.</p>
-        <div class="hero-box">
-          <p style="font-family:var(--font-serif);font-size:1.1875rem;color:var(--gold);margin-bottom:8px;font-weight:600">Comment utiliser ce questionnaire</p>
-          <p>Ce n'est pas un questionnaire à cocher pour valider un projet — c'est un <strong>outil de discernement</strong>&nbsp;: il aide à y voir clair, à nommer ce qui est solide et ce qui reste à construire. Il n'y a pas de bonne ou de mauvaise réponse.</p>
-          <p>Répondre honnêtement, idéalement <strong>à plusieurs</strong> (porteur, conseil, accompagnateur spirituel), sans se précipiter. Comptez <strong>environ 30 min</strong> pour un premier passage&nbsp;; vous pouvez le faire <strong>en plusieurs fois</strong>, votre progression est enregistrée. Commencer par les <strong>3 questions verrou</strong>&nbsp;: tant qu'elles n'ont pas de réponse claire, on n'engage rien.</p>
-          <p style="margin-top:14px"><strong>À chaque question, précisez votre réponse</strong> dans la note prévue&nbsp;: si c'est clair, dites <em>laquelle</em>&nbsp;; sinon, dites ce qui reste à creuser. C'est là qu'est le vrai discernement.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#edf7f2;border:1.5px solid var(--vert);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--vert-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>C'est clair</span>
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:var(--gold-lt);border:1.5px solid var(--gold);border-radius:20px;font-size:.78rem;font-weight:700;color:#7a5a10"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>À approfondir</span>
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--ember-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--ember);display:inline-block"></span>Pas encore mûr</span>
-          </div>
-        </div>
-        <a href="#verrous" class="hero-cta" aria-label="Commencer le questionnaire — aller aux 3 verrous">
-          Commencer le discernement
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </section>
     <section id="verrous" class="verrous-section"></section>
     <section id="theme-1" class="theme-section"></section>
     <section id="theme-2" class="theme-section"></section>
@@ -402,6 +459,7 @@ button{cursor:pointer;font-family:inherit}
 <footer class="site-footer">
   <p><strong>Foyer de feu</strong> — outil de discernement interne &middot; V1 &middot; accompagne le cadrage, la revue critique et le glossaire. Document de travail confidentiel &mdash; ne pas diffuser.</p>
 </footer>
+</div><!-- /#questionnaire-body -->
 
 <script>
 /* =========================================================
@@ -937,10 +995,8 @@ function renderSynthese() {
 <div class="synthese-share" style="max-width:760px;margin:8px auto 24px;padding:24px 26px;background:rgba(200,144,43,.07);border:1px solid rgba(200,144,43,.28);border-radius:14px">
   <h3 style="font-family:var(--font-serif);color:var(--ember-dk);font-size:1.25rem;margin:0 0 8px">Envoyer mes réponses</h3>
   <p style="font-size:.875rem;color:var(--muted);line-height:1.6;margin:0 0 16px">Vos réponses restent sur votre appareil&nbsp;— rien n'est envoyé automatiquement. Choisissez comment les transmettre&nbsp;:</p>
-  <label style="display:block;font-size:.8125rem;color:var(--ink);margin-bottom:16px">Votre nom <span style="color:var(--muted)">(facultatif, pour savoir de qui viennent les réponses)</span>
-    <input type="text" id="resp-name" placeholder="Prénom Nom" style="display:block;width:100%;max-width:320px;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:.9rem;font-family:inherit;background:#fff;color:var(--ink)">
-  </label>
-  <div style="display:flex;flex-wrap:wrap;gap:10px">
+  <div id="synth-name-display">Chargement…</div>
+  <div class="share-buttons-row" style="display:flex;flex-wrap:wrap;gap:10px">
     <button class="btn-primary" onclick="sendByEmail()">&#9993;&nbsp; Envoyer par email</button>
     <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="downloadRecap()">&#8595;&nbsp; Télécharger (.txt)</button>
     <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="copyRecap()">&#10697;&nbsp; Copier</button>
@@ -1049,8 +1105,8 @@ function copyRecap(){
 const LS_KEY = 'foyer-feu-discernement-v1';
 
 function loadState() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY)) || { answers:{}, notes:{} }; }
-  catch(e) { return { answers:{}, notes:{} }; }
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || { answers:{}, notes:{}, name:'' }; }
+  catch(e) { return { answers:{}, notes:{}, name:'' }; }
 }
 
 function saveState(state) {
@@ -1279,7 +1335,7 @@ function showTooltip(key, targetEl) {
 function positionTooltip(el) {
   // tooltip en position:fixed => coordonnées VIEWPORT (pas de scrollX/scrollY)
   const r = el.getBoundingClientRect();
-  const tw = 310;
+  const tw = Math.min(310, window.innerWidth - 24);
   tooltip.style.maxWidth = tw + 'px';
   let left = r.left;
   if (left + tw > window.innerWidth - 10) left = window.innerWidth - tw - 10;
@@ -1343,7 +1399,7 @@ function attachEvents() {
   document.addEventListener('click', e => {
     if (e.target.id === 'reset-btn' || e.target.closest('#reset-btn')) {
       if (confirm('Réinitialiser toutes les réponses et notes ? Cette action est irréversible.')) {
-        STATE = { answers:{}, notes:{} };
+        STATE = { answers:{}, notes:{}, name:'' };
         saveState(STATE);
         location.reload();
       }
@@ -1395,6 +1451,52 @@ function attachTermTooltips() {
   });
 }
 
+/* === WELCOME SCREEN LOGIC === */
+function updateSyntheseNameDisplay() {
+  const el = document.getElementById('synth-name-display');
+  if (!el) return;
+  const name = STATE.name || '—';
+  el.innerHTML = 'Réponses de : <strong>' + name + '</strong>' +
+    ' <a href="#" onclick="returnToWelcome();return false;">modifier</a>';
+}
+
+function startQuestionnaire() {
+  const nameInput = document.getElementById('resp-name');
+  const errorEl  = document.getElementById('name-error');
+  const name = (nameInput ? nameInput.value : '').trim();
+  if (!name) {
+    if (errorEl) errorEl.textContent = 'Merci d\'indiquer votre nom pour commencer.';
+    if (nameInput) { nameInput.focus(); nameInput.style.borderColor = '#ffd0c0'; }
+    return;
+  }
+  if (errorEl) errorEl.textContent = '';
+  if (nameInput) nameInput.style.borderColor = '';
+  STATE.name = name;
+  saveState(STATE);
+  // Bascule d'écran
+  const welcome = document.getElementById('welcome-screen');
+  const body    = document.getElementById('questionnaire-body');
+  if (welcome) welcome.style.display = 'none';
+  if (body)    body.style.display = '';
+  // Mise à jour de l'affichage du nom en synthèse
+  updateSyntheseNameDisplay();
+  // Scroll vers les verrous
+  const verrous = document.getElementById('verrous');
+  if (verrous) setTimeout(() => verrous.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+}
+
+function returnToWelcome() {
+  const welcome = document.getElementById('welcome-screen');
+  const body    = document.getElementById('questionnaire-body');
+  if (welcome) welcome.style.display = '';
+  if (body)    body.style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => {
+    const inp = document.getElementById('resp-name');
+    if (inp) inp.focus();
+  }, 380);
+}
+
 /* === SCROLL REVEAL === */
 function revealFadeUp() {
   document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
@@ -1419,6 +1521,24 @@ function init() {
   updateProgress();
   updateVerrouIndicators();
   updateSynthese();
+
+  // Pré-remplir le champ nom de l'accueil
+  const nameInput = document.getElementById('resp-name');
+  if (nameInput && STATE.name) nameInput.value = STATE.name;
+
+  // Décider quel écran afficher
+  const hasAnswers = Object.keys(STATE.answers).some(k => STATE.answers[k]);
+  if (STATE.name && hasAnswers) {
+    // Nom + réponses présents → aller directement au questionnaire
+    const welcome = document.getElementById('welcome-screen');
+    const body    = document.getElementById('questionnaire-body');
+    if (welcome) welcome.style.display = 'none';
+    if (body)    body.style.display = '';
+    updateSyntheseNameDisplay();
+  } else {
+    // Accueil visible (défaut CSS), synthèse affiche le nom vide
+    updateSyntheseNameDisplay();
+  }
 
   // Attach events
   attachEvents();
