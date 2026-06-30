@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foyer de feu — Questionnaire de discernement (V1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* === VARIABLES === */
+:root{
+  --cream:#FBF7F1;--ink:#2B2320;--muted:#7C7167;
+  --ember:#B23A23;--ember-dk:#7A2618;
+  --gold:#C8902B;--gold-lt:#F3E7CC;
+  --line:#E7DDD0;--card:#FFFFFF;
+  --vert:#2E7D52;--vert-dk:#1E5638;
+  --font-serif:'Cormorant Garamond',Georgia,serif;
+  --font-sans:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --radius:14px;--shadow:0 2px 16px rgba(43,35,32,.09);
+}
+/* === RESET === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.6}
+h1,h2,h3,h4{font-family:var(--font-serif)}
+a{color:var(--ember-dk)}
+button{cursor:pointer;font-family:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* === STICKY HEADER === */
+#main-header{position:sticky;top:0;z-index:100;background:rgba(251,247,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:8px 20px}
+.header-inner{display:flex;align-items:center;gap:14px;max-width:1200px;margin:0 auto}
+.header-brand{display:flex;align-items:center;gap:8px;font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--ember-dk);white-space:nowrap;text-decoration:none}
+.header-brand svg{width:18px;height:28px;flex-shrink:0}
+.progress-wrap{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.progress-track{flex:1;height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+#progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--ember-dk),var(--gold));border-radius:4px;transition:width .4s ease}
+#progress-label{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.v-indicators{display:flex;gap:6px}
+.v-ind{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);font-size:.6875rem;font-weight:700;color:var(--muted);transition:all .3s}
+.v-ind.state-clair{border-color:var(--vert);background:var(--vert);color:#fff}
+.v-ind.state-creuser{border-color:var(--gold);background:var(--gold-lt);color:#7a5a10}
+.v-ind.state-pas-encore{border-color:var(--ember);background:#fdf0ee;color:var(--ember)}
+#gl-btn{background:none;border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:.8125rem;color:var(--ink);transition:all .2s;white-space:nowrap}
+#gl-btn:hover{border-color:var(--gold);color:var(--ember-dk)}
+
+/* === LAYOUT === */
+.layout{display:grid;grid-template-columns:210px 1fr;max-width:1200px;margin:0 auto}
+
+/* === SIDEBAR === */
+#section-nav{position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;padding:28px 0 28px 20px;border-right:1px solid var(--line)}
+.snav-item{display:flex;align-items:center;gap:10px;padding:7px 14px 7px 0;text-decoration:none;color:var(--muted);font-size:.8rem;border-left:2px solid transparent;transition:all .2s;line-height:1.3}
+.snav-item:hover,.snav-item.active{color:var(--ember-dk);border-left-color:var(--gold)}
+.snav-dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0;transition:background .3s}
+.snav-item.active .snav-dot{background:var(--gold)}
+.snav-item.completed .snav-dot{background:var(--vert)}
+
+/* === HERO === */
+.hero-section{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 40px;
+  background:linear-gradient(rgba(22,10,8,.72),rgba(22,10,8,.5)),url('https://images.unsplash.com/photo-1650203947436-a5a1e7e7cf9e?w=1920&q=80&auto=format&fit=crop') center/cover no-repeat}
+.hero-content{max-width:680px;color:#fff;position:relative;z-index:1}
+.hero-label{font-size:.8125rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,144,43,.9);margin-bottom:18px}
+.hero-title{font-size:clamp(3rem,7vw,5.5rem);font-weight:300;line-height:1.0;color:#fff;margin-bottom:8px}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-family:var(--font-sans);font-size:1.125rem;color:rgba(255,255,255,.75);margin:18px 0 28px;font-weight:300;line-height:1.6}
+.hero-box{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:20px 26px;margin:0 auto 34px;text-align:left}
+.hero-box p{font-size:.9375rem;color:rgba(255,255,255,.82);line-height:1.65}
+.hero-box p+p{margin-top:8px}
+.hero-box strong{color:var(--gold)}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);border:none;border-radius:40px;padding:14px 36px;font-size:1rem;font-weight:600;letter-spacing:.02em;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,144,43,.45)}
+
+/* === FLAME SVG ANIMATION === */
+.flame-hero{width:52px;height:76px;margin:0 auto 22px}
+.fl-outer{animation:fl-drift 3s ease-in-out infinite;transform-origin:50% 100%}
+.fl-inner{animation:fl-drift 2.2s ease-in-out infinite reverse;transform-origin:50% 100%}
+@keyframes fl-drift{0%,100%{transform:scaleX(1) rotate(-.5deg)}35%{transform:scaleX(.93) rotate(.9deg)}70%{transform:scaleX(1.04) rotate(-.3deg)}}
+
+/* === SECTION HEADERS === */
+.section-header{padding:56px 44px 28px}
+.section-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+.section-title{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;color:var(--ember-dk);line-height:1.15;margin-bottom:14px}
+.section-desc{font-size:.9375rem;color:var(--muted);max-width:580px;line-height:1.7}
+.gold-divider{display:flex;align-items:center;gap:18px;padding:0 44px 24px}
+.gold-divider::before,.gold-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.gold-divider-icon{color:var(--gold);font-size:1.125rem;flex-shrink:0}
+
+/* === VERROUS SECTION === */
+.verrous-section{padding:64px 44px;
+  background:linear-gradient(rgba(18,8,6,.9),rgba(18,8,6,.9)),url('https://images.unsplash.com/photo-1502185472670-259cd7f94868?w=1400&q=80&auto=format&fit=crop') center/cover no-repeat}
+.verrous-section .section-label{color:var(--gold)}
+.verrous-section .section-title{color:#f5ede5}
+.verrous-section .section-desc{color:rgba(245,237,229,.68)}
+.verrous-grid{display:grid;gap:22px;margin-top:36px}
+
+/* === QUESTION CARD === */
+.q-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 30px;border-left:4px solid var(--line);transition:border-color .3s}
+.q-card.state-clair{border-left-color:var(--vert)}
+.q-card.state-creuser{border-left-color:var(--gold)}
+.q-card.state-pas-encore{border-left-color:var(--ember)}
+.q-card--verrou{border:1.5px solid rgba(200,144,43,.35);border-left:4px solid var(--gold);background:rgba(255,255,255,.04)}
+.q-card--verrou .q-title{color:#f5ede5;font-size:1.35rem}
+.q-card--verrou .q-detail{color:rgba(245,237,229,.68)}
+.q-card--verrou .q-details-toggle{color:rgba(245,237,229,.45)}
+.q-card--verrou .q-details-content{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.q-card--verrou .q-pourquoi h4,.q-card--verrou .q-change h4{color:rgba(245,237,229,.45)}
+.q-card--verrou .q-pourquoi p,.q-card--verrou .q-change p{color:rgba(245,237,229,.75)}
+.q-card--verrou .q-note-toggle{color:rgba(245,237,229,.35)}
+.q-card--verrou .q-note-input{background:rgba(255,255,255,.05);border-color:rgba(200,144,43,.2);color:#f5ede5}
+.q-badge{display:inline-block;font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.q-badge--verrou{background:rgba(200,144,43,.2);color:var(--gold);border:1px solid rgba(200,144,43,.3)}
+.q-badge--theme{background:var(--gold-lt);color:var(--ember-dk)}
+.q-title{font-family:var(--font-serif);font-size:1.2rem;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:8px}
+.q-detail{font-size:.9375rem;color:var(--muted);line-height:1.65;margin-bottom:18px}
+.q-detail .term{border-bottom:1.5px dotted var(--gold);cursor:help}
+
+/* === RESPONSE BUTTONS === */
+.q-responses{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px;border:none}
+.resp-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:1.5px solid var(--line);border-radius:24px;font-size:.875rem;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);transition:all .18s;font-family:var(--font-sans)}
+.resp-btn input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.resp-btn .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0;transition:background .18s}
+.resp-btn:hover{border-color:var(--gold);color:var(--ink)}
+.resp-btn:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+.resp-btn.checked-clair{border-color:var(--vert);background:#edf7f2;color:var(--vert-dk)}
+.resp-btn.checked-clair .dot{background:var(--vert)}
+.resp-btn.checked-creuser{border-color:var(--gold);background:var(--gold-lt);color:#7a5a10}
+.resp-btn.checked-creuser .dot{background:var(--gold)}
+.resp-btn.checked-pas-encore{border-color:var(--ember);background:#fdf0ee;color:var(--ember-dk)}
+.resp-btn.checked-pas-encore .dot{background:var(--ember)}
+
+/* === POURQUOI (visible par défaut) === */
+.q-why{margin-top:14px;background:#f8f4ef;border-radius:10px;padding:14px 18px}
+.q-why-text{font-size:.875rem;color:var(--ink);line-height:1.68}
+.q-change-text{font-size:.8125rem;color:var(--muted);line-height:1.65;margin-top:8px;padding-top:8px;border-top:1px dotted var(--line)}
+.q-card--verrou .q-why{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+.q-card--verrou .q-why-text{color:rgba(245,237,229,.82)}
+.q-card--verrou .q-change-text{color:rgba(245,237,229,.6);border-top-color:rgba(255,255,255,.12)}
+.q-card--priere .q-why{background:rgba(255,255,255,.04);border:1px solid rgba(200,144,43,.18)}
+.q-card--priere .q-why-text{color:rgba(245,237,229,.8)}
+.q-card--priere .q-change-text{color:rgba(245,237,229,.55);border-top-color:rgba(200,144,43,.2)}
+
+/* === NOTE === */
+.q-note-wrap{margin-top:10px}
+.q-note-label{display:block;font-size:.8125rem;color:var(--muted);margin-top:14px;font-weight:600}
+.q-note-reco{color:#7a5a10;font-weight:600}
+.q-note-nudge{display:block;font-size:.75rem;color:#9a6b14;margin-top:6px}
+.q-card.needs-note .q-note-input{border-color:var(--gold);background:rgba(200,144,43,.06)}
+.q-card--verrou .q-note-label,.q-card--priere .q-note-label{color:rgba(245,237,229,.72)}
+.q-card--verrou .q-note-reco,.q-card--priere .q-note-reco,.q-card--verrou .q-note-nudge,.q-card--priere .q-note-nudge{color:var(--gold)}
+.q-note-input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 13px;font-family:var(--font-sans);font-size:.875rem;color:var(--ink);background:var(--cream);resize:vertical;transition:border-color .2s;margin-top:6px}
+.q-note-input:focus{outline:none;border-color:var(--gold)}
+
+/* === GLOSSARY TERMS === */
+.term{border-bottom:1.5px dotted var(--gold);cursor:help;color:inherit;transition:color .15s}
+.term:hover{color:var(--ember-dk)}
+
+/* === TOOLTIP === */
+#term-tooltip{position:fixed;z-index:500;background:#332a24;color:#f5ede5;border:1.5px solid var(--gold);border-radius:10px;padding:14px 18px;max-width:300px;font-size:.8125rem;line-height:1.5;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4)}
+#term-tooltip.visible{opacity:1;transform:translateY(0)}
+.tt-label{font-family:var(--font-serif);font-size:.9375rem;font-weight:600;color:var(--gold);margin-bottom:7px}
+.tt-clair{margin-bottom:5px}
+.tt-chez{color:rgba(245,237,229,.7);font-size:.75rem;border-top:1px solid rgba(255,255,255,.12);padding-top:6px;margin-top:5px}
+.tt-sm{font-size:.6875rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(245,237,229,.45);margin-bottom:2px}
+
+/* === GLOSSARY DRAWER === */
+#gl-overlay{position:fixed;inset:0;background:rgba(43,35,32,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+#gl-overlay.open{opacity:1;pointer-events:all}
+#gl-drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,95vw);background:var(--cream);z-index:201;transform:translateX(100%);transition:transform .35s ease;overflow-y:auto}
+#gl-drawer.open{transform:translateX(0)}
+.gl-header{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--cream);z-index:1}
+.gl-header h2{font-family:var(--font-serif);font-size:1.5rem;color:var(--ember-dk)}
+#gl-close{background:none;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;font-size:1rem;color:var(--muted);transition:all .2s}
+#gl-close:hover{border-color:var(--ember);color:var(--ember)}
+#gl-list{padding:16px 26px 48px}
+.gl-section-head{font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:18px 0 8px;border-top:1px solid var(--line);margin-top:8px}
+.gl-section-head:first-child{border-top:none;padding-top:8px}
+.gl-item{padding:14px 0;border-bottom:1px solid var(--line)}
+.gl-item:last-child{border-bottom:none}
+.gl-item-label{font-family:var(--font-serif);font-size:1.0625rem;font-weight:600;color:var(--ember-dk);margin-bottom:5px}
+.gl-item-clair{font-size:.875rem;color:var(--ink);line-height:1.6;margin-bottom:4px}
+.gl-item-analogy{font-size:.8125rem;color:var(--muted);font-style:italic;margin-bottom:5px}
+.gl-item-chez{font-size:.8125rem;color:var(--ember-dk);background:var(--gold-lt);border-radius:6px;padding:8px 11px;line-height:1.55}
+
+/* === THEME SECTIONS === */
+.theme-section{border-bottom:1px solid var(--line);padding-bottom:32px}
+.questions-wrap{padding:0 44px;display:grid;gap:18px}
+
+/* === PRAYER SECTION === */
+.priere-section{padding:72px 44px;
+  background:linear-gradient(rgba(20,10,8,.9),rgba(20,10,8,.9)),url('https://images.unsplash.com/photo-1532689193429-29caa23e5268?w=1600&q=80&auto=format&fit=crop') center/cover no-repeat}
+.priere-section .section-label{color:var(--gold)}
+.priere-section .section-title{color:#f5ede5}
+.priere-section .section-desc{color:rgba(245,237,229,.65)}
+.priere-quote{border-left:3px solid var(--gold);padding-left:20px;margin:28px 0;max-width:600px;font-family:var(--font-serif);font-size:1.0625rem;color:rgba(245,237,229,.78);font-style:italic;line-height:1.75}
+.priere-grid{display:grid;gap:18px;margin-top:28px;max-width:760px}
+.q-card--priere{background:rgba(255,255,255,.05);border:1px solid rgba(200,144,43,.2);border-left:4px solid rgba(200,144,43,.4)}
+.q-card--priere .q-title{color:#f5ede5;font-size:1.125rem}
+.q-card--priere .q-responses .resp-btn{border-color:rgba(200,144,43,.3);color:rgba(245,237,229,.5)}
+.q-card--priere .q-responses .resp-btn:hover{border-color:var(--gold);color:rgba(245,237,229,.9)}
+.q-card--priere .q-note-toggle{color:rgba(245,237,229,.38)}
+.q-card--priere .q-note-input{background:rgba(255,255,255,.05);border-color:rgba(200,144,43,.2);color:#f5ede5}
+.priere-closing{max-width:600px;margin-top:36px;padding:20px 24px;border-left:3px solid var(--gold);background:rgba(200,144,43,.08);border-radius:0 8px 8px 0}
+.priere-closing p{font-family:var(--font-serif);font-size:1rem;color:rgba(245,237,229,.75);font-style:italic;line-height:1.7}
+
+/* === SYNTHESIS === */
+.synthese-section{padding:60px 44px 80px}
+.synthese-verrous{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.synth-v-card{border-radius:12px;padding:18px 20px;border:1.5px solid var(--line);background:var(--card)}
+.sv-id{font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.sv-q{font-family:var(--font-serif);font-size:.9375rem;color:var(--ink);margin-bottom:10px;line-height:1.35}
+.sv-state{font-size:.8125rem;font-weight:700;padding:4px 13px;border-radius:20px;display:inline-block}
+.sv-state.clair{background:#edf7f2;color:var(--vert-dk)}
+.sv-state.creuser{background:var(--gold-lt);color:#7a5a10}
+.sv-state.pas-encore{background:#fdf0ee;color:var(--ember-dk)}
+.sv-state.unknown{background:var(--line);color:var(--muted)}
+.synthese-alert{display:none;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:10px;padding:14px 18px;margin-top:20px;color:var(--ember-dk);font-size:.9375rem;line-height:1.55}
+.synthese-alert.visible{display:block}
+.synthese-overview{margin-top:36px}
+.synthese-overview h3{font-family:var(--font-serif);font-size:1.25rem;color:var(--ember-dk);margin-bottom:18px}
+.tpr-row{display:flex;align-items:center;gap:14px;font-size:.875rem;margin-bottom:10px}
+.tpr-label{min-width:170px;color:var(--muted)}
+.tpr-bar{flex:1;height:6px;background:var(--line);border-radius:4px;overflow:hidden}
+.tpr-fill{height:100%;border-radius:4px;background:var(--vert);transition:width .5s ease}
+.tpr-count{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.synthese-diagram{margin-top:44px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.synthese-diagram h3{font-family:var(--font-serif);font-size:1.375rem;color:var(--ember-dk);margin-bottom:18px}
+.diag-step{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.diag-step:last-child{border-bottom:none}
+.diag-num{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--ember-dk);color:#fff;font-family:var(--font-serif);font-weight:600;font-size:.9375rem;flex-shrink:0}
+.diag-connector{padding:2px 0 2px 22px;color:var(--gold);font-size:1rem}
+.diag-content h4{font-family:var(--font-serif);font-size:1rem;color:var(--ink);margin-bottom:3px}
+.diag-content p{font-size:.875rem;color:var(--muted);line-height:1.55}
+.diag-warning{font-size:.8125rem;color:var(--ember-dk);background:#fdf0ee;border-radius:6px;padding:6px 10px;margin-top:5px;display:inline-block}
+.synthese-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--ember-dk);color:#fff;border:none;border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:background .2s,transform .2s}
+.btn-primary:hover{background:var(--ember);transform:translateY(-1px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--muted);border:1.5px solid var(--line);border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:all .2s}
+.btn-secondary:hover{border-color:var(--ember);color:var(--ember-dk)}
+.btn-danger{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--muted);border:1.5px solid var(--line);border-radius:24px;padding:12px 28px;font-size:.9375rem;font-weight:600;transition:all .2s}
+.btn-danger:hover{border-color:var(--ember);background:#fdf0ee;color:var(--ember-dk)}
+
+/* === FOOTER === */
+.site-footer{border-top:1px solid var(--line);padding:20px 44px;background:var(--cream)}
+.site-footer p{font-size:.75rem;color:var(--muted);line-height:1.6;max-width:1200px;margin:0 auto}
+.site-footer strong{color:var(--ember-dk)}
+
+/* === SCROLL ANIMATIONS === */
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* === RESPONSIVE === */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  #section-nav{display:none}
+  .questions-wrap,.section-header,.verrous-section,.priere-section,.synthese-section{padding-left:20px;padding-right:20px}
+  .gold-divider{padding-left:20px;padding-right:20px}
+  .synthese-verrous{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .header-brand span{display:none}
+  .v-indicators{display:none}
+  .hero-title{font-size:2.75rem}
+  .hero-section{padding:60px 24px}
+}
+
+/* === PRINT === */
+@media print{
+  #main-header,#section-nav,#gl-drawer,#gl-overlay,#term-tooltip,
+  .hero-section,.synthese-actions,.synthese-share,#gl-btn,.q-note-toggle+div[hidden]
+  {display:none!important}
+  body{font-size:11pt;background:#fff;color:#000}
+  .layout{display:block}
+  .verrous-section{background:#f0ece8!important;padding:20px}
+  .priere-section{background:#f0ece8!important;padding:20px}
+  .q-card{break-inside:avoid;border:1px solid #ccc;box-shadow:none;margin-bottom:12px}
+  .q-details-content{display:grid!important}
+  .q-note-wrap{display:block!important}
+  [hidden]{display:block!important}
+}
+
+/* === REDUCED MOTION === */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- GLOSSARY OVERLAY + DRAWER -->
+<div id="gl-overlay" aria-hidden="true"></div>
+<aside id="gl-drawer" role="dialog" aria-label="Glossaire des termes" aria-hidden="true" aria-modal="true">
+  <div class="gl-header">
+    <h2>Glossaire</h2>
+    <button id="gl-close" aria-label="Fermer le glossaire">&#x2715;</button>
+  </div>
+  <div id="gl-list"></div>
+</aside>
+
+<!-- TOOLTIP -->
+<div id="term-tooltip" role="tooltip" aria-hidden="true"></div>
+
+<!-- STICKY HEADER -->
+<header id="main-header">
+  <div class="header-inner">
+    <a href="#hero" class="header-brand" aria-label="Foyer de feu — retour au début">
+      <svg viewBox="0 0 18 28" fill="none" aria-hidden="true">
+        <path d="M9 1C9 1 17 9 17 17C17 22 13.5 26 9 27.5C4.5 26 1 22 1 17C1 9 9 1 9 1Z" fill="url(#hg1)"/>
+        <path d="M9 12C9 12 13 16.5 13 20C13 23 11.2 26 9 27C6.8 26 5 23 5 20C5 16.5 9 12 9 12Z" fill="url(#hg2)"/>
+        <defs>
+          <linearGradient id="hg1" x1="9" y1="1" x2="9" y2="27.5" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#C8902B"/><stop offset="100%" stop-color="#7A2618"/>
+          </linearGradient>
+          <linearGradient id="hg2" x1="9" y1="12" x2="9" y2="27" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F5C842"/><stop offset="100%" stop-color="#C8902B"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span>Foyer de feu</span>
+    </a>
+    <div class="progress-wrap">
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progression du questionnaire">
+        <div id="progress-fill"></div>
+      </div>
+      <span id="progress-label" aria-live="polite">0 / 36</span>
+    </div>
+    <div class="v-indicators" aria-label="État des 3 verrous">
+      <span class="v-ind" id="vi-V1" title="Verrou 1 — L'appel d'Église">V1</span>
+      <span class="v-ind" id="vi-V2" title="Verrou 2 — Œuvre ou entreprise">V2</span>
+      <span class="v-ind" id="vi-V3" title="Verrou 3 — Posséder ou servir">V3</span>
+    </div>
+    <button id="gl-btn" aria-haspopup="dialog" aria-controls="gl-drawer">Glossaire</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav id="section-nav" aria-label="Navigation par section">
+    <a href="#verrous" class="snav-item" data-target="verrous"><span class="snav-dot"></span>Les 3 Verrous</a>
+    <a href="#theme-1" class="snav-item" data-target="theme-1"><span class="snav-dot"></span>1&nbsp;· Sens &amp; appel</a>
+    <a href="#theme-2" class="snav-item" data-target="theme-2"><span class="snav-dot"></span>2&nbsp;· L'Église</a>
+    <a href="#theme-3" class="snav-item" data-target="theme-3"><span class="snav-dot"></span>3&nbsp;· Structure</a>
+    <a href="#theme-4" class="snav-item" data-target="theme-4"><span class="snav-dot"></span>4&nbsp;· Modèle économique</a>
+    <a href="#theme-5" class="snav-item" data-target="theme-5"><span class="snav-dot"></span>5&nbsp;· Protection</a>
+    <a href="#theme-6" class="snav-item" data-target="theme-6"><span class="snav-dot"></span>6&nbsp;· Porteur</a>
+    <a href="#priere" class="snav-item" data-target="priere"><span class="snav-dot"></span>Dans la prière</a>
+    <a href="#synthese" class="snav-item" data-target="synthese"><span class="snav-dot"></span>Synthèse</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main-content">
+    <section id="hero" class="hero-section">
+      <div class="hero-content">
+        <svg class="flame-hero" viewBox="0 0 52 76" fill="none" aria-hidden="true">
+          <path class="fl-outer" d="M26 3C26 3 46 22 46 42C46 56 37 68 26 73C15 68 6 56 6 42C6 22 26 3 26 3Z" fill="url(#fg1)"/>
+          <path class="fl-inner" d="M26 28C26 28 36 38 36 48C36 56 31.5 63 26 66C20.5 63 16 56 16 48C16 38 26 28 26 28Z" fill="url(#fg2)"/>
+          <ellipse cx="26" cy="60" rx="5" ry="6" fill="#F5D76E" opacity=".85"/>
+          <defs>
+            <linearGradient id="fg1" x1="26" y1="3" x2="26" y2="73" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#C8902B" stop-opacity=".9"/>
+              <stop offset="55%" stop-color="#B23A23"/>
+              <stop offset="100%" stop-color="#7A2618"/>
+            </linearGradient>
+            <linearGradient id="fg2" x1="26" y1="28" x2="26" y2="66" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#F5C842"/>
+              <stop offset="100%" stop-color="#C8902B"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <p class="hero-label">Outil de discernement interne</p>
+        <h1 class="hero-title">Foyer<br><em>de feu</em></h1>
+        <p class="hero-sub">Un support de discernement au sens fort — pour faire émerger la vérité du projet&nbsp;: ce qui est appel et ce qui est désir, ce qui est solide et ce qui est fragile.</p>
+        <div class="hero-box">
+          <p style="font-family:var(--font-serif);font-size:1.1875rem;color:var(--gold);margin-bottom:8px;font-weight:600">Comment utiliser ce questionnaire</p>
+          <p>Ce n'est pas un questionnaire à cocher pour valider un projet — c'est un <strong>outil de discernement</strong>&nbsp;: il aide à y voir clair, à nommer ce qui est solide et ce qui reste à construire. Il n'y a pas de bonne ou de mauvaise réponse.</p>
+          <p>Répondre honnêtement, idéalement <strong>à plusieurs</strong> (porteur, conseil, accompagnateur spirituel), sans se précipiter. Comptez <strong>environ 30 min</strong> pour un premier passage&nbsp;; vous pouvez le faire <strong>en plusieurs fois</strong>, votre progression est enregistrée. Commencer par les <strong>3 questions verrou</strong>&nbsp;: tant qu'elles n'ont pas de réponse claire, on n'engage rien.</p>
+          <p style="margin-top:14px"><strong>À chaque question, précisez votre réponse</strong> dans la note prévue&nbsp;: si c'est clair, dites <em>laquelle</em>&nbsp;; sinon, dites ce qui reste à creuser. C'est là qu'est le vrai discernement.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#edf7f2;border:1.5px solid var(--vert);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--vert-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>C'est clair</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:var(--gold-lt);border:1.5px solid var(--gold);border-radius:20px;font-size:.78rem;font-weight:700;color:#7a5a10"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>À approfondir</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:#fdf0ee;border:1.5px solid var(--ember);border-radius:20px;font-size:.78rem;font-weight:700;color:var(--ember-dk)"><span style="width:8px;height:8px;border-radius:50%;background:var(--ember);display:inline-block"></span>Pas encore mûr</span>
+          </div>
+        </div>
+        <a href="#verrous" class="hero-cta" aria-label="Commencer le questionnaire — aller aux 3 verrous">
+          Commencer le discernement
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+    <section id="verrous" class="verrous-section"></section>
+    <section id="theme-1" class="theme-section"></section>
+    <section id="theme-2" class="theme-section"></section>
+    <section id="theme-3" class="theme-section"></section>
+    <section id="theme-4" class="theme-section"></section>
+    <section id="theme-5" class="theme-section"></section>
+    <section id="theme-6" class="theme-section"></section>
+    <section id="priere"  class="priere-section"></section>
+    <section id="synthese" class="synthese-section"></section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p><strong>Foyer de feu</strong> — outil de discernement interne &middot; V1 &middot; accompagne le cadrage, la revue critique et le glossaire. Document de travail confidentiel &mdash; ne pas diffuser.</p>
+</footer>
+
+<script>
+/* =========================================================
+   FOYER DE FEU — Questionnaire de discernement V1
+   ========================================================= */
+
+/* === GLOSSARY DATA === */
+const GLOSSARY = {
+  ecclesial: {
+    label: 'Notions ecclésiales',
+    terms: {
+      'congregation': {
+        label: 'Congrégation religieuse',
+        clair: 'Communauté de religieux ou de religieuses vivant selon une règle commune (bénédictins, dominicains, franciscains, etc.), reconnue par l\'Église. Elle détient souvent des biens immobiliers (abbayes, couvents, prieurés).',
+        analogy: 'Une famille élargie qui vit ensemble selon des valeurs et des règles partagées, sous l\'autorité d\'un supérieur (abbé, prieur…).',
+        chez_nous: 'Le partenaire clé du projet : c\'est la congrégation qui peut proposer son lieu, cautionner la démarche auprès de l\'Église et ouvrir l\'accès au mécénat catholique.'
+      },
+      'diocese': {
+        label: 'Diocèse',
+        clair: 'Territoire géographique de l\'Église catholique placé sous l\'autorité d\'un évêque. Toute activité cultuelle (messe, tabernacle, chapelle publique) doit être autorisée par l\'évêque du diocèse concerné.',
+        analogy: 'La circonscription administrative de l\'Église locale — comme un département, mais ecclésiastique.',
+        chez_nous: 'L\'accord du diocèse est une condition bloquante pour la dimension cultuelle du projet. C\'est aussi à l\'association diocésaine qu\'on confie le mieux le culte — pas à une association 1905 indépendante.'
+      },
+      'asso-1905': {
+        label: 'Association cultuelle (loi 1905)',
+        clair: 'Association dont l\'objet est exclusivement le culte (messe, prière, entretien du lieu de culte). Elle ne peut pas gérer d\'accueil, d\'hébergement ni d\'activité commerciale.',
+        analogy: 'Un club au règlement très strict : il n\'a le droit de faire qu\'une seule chose, le culte.',
+        chez_nous: 'À éviter comme structure porteuse ici : le culte se confie plutôt au diocèse (association diocésaine / convention). Ce n\'est pas l\'outil pour l\'accueil ou les familles.'
+      }
+    }
+  },
+  structures: {
+    label: 'Les structures (les « boîtes » juridiques)',
+    terms: {
+      'fonds-dotation': {
+        label: 'Fonds de dotation',
+        clair: 'Une boîte à but non lucratif qui reçoit des dons et peut délivrer des reçus fiscaux. Personne ne s\'enrichit avec ; si elle ferme, ses biens partent à une autre œuvre, jamais aux fondateurs.',
+        analogy: 'Une tirelire blindée dédiée à une cause : on ne peut s\'en servir que pour cette cause.',
+        chez_nous: 'La boîte qui collecte les dons des fidèles/mécènes et détient les murs « patrimoniaux/catho ». Les murs d\'exploitation sont dans la SCI — les dons ne financent jamais la SCI.'
+      },
+      'fondation-abritee': {
+        label: 'Fondation abritée',
+        clair: 'On loge son projet à l\'intérieur d\'une fondation existante. On profite de sa structure, sa crédibilité et son cadre fiscal sans tout monter soi-même.',
+        analogy: 'Ouvrir un stand dans un grand magasin plutôt que construire son propre magasin.',
+        chez_nous: 'Piste très recommandée — s\'abriter sous une fondation d\'Église (ex. Fondation des Monastères) rassure d\'un coup mécènes, congrégation et autorités. Le geste qui débloque le plus de difficultés.'
+      },
+      'sci': {
+        label: 'SCI — Société Civile Immobilière',
+        clair: 'Société dont le seul métier est de posséder un bien immobilier et de le louer. On peut y accueillir des investisseurs.',
+        analogy: 'Quand plusieurs personnes achètent un appartement ensemble en créant une société pour organiser qui possède quelle part.',
+        chez_nous: 'Dans le montage clarifié, la SCI détient uniquement les murs « côté exploitation », financés par capital + emprunt — pas par les dons.'
+      },
+      'sas': {
+        label: 'SAS — Société par Actions Simplifiée',
+        clair: 'Société commerciale souple pour exercer une activité : employer, facturer, dégager un bénéfice.',
+        analogy: 'La forme de la plupart des startups et PME.',
+        chez_nous: 'Candidate pour exploiter le lieu (accueil, restauration, séjours), en concurrence avec l\'association 1901.'
+      },
+      'asso-1901': {
+        label: 'Association loi 1901',
+        clair: 'La boîte à but non lucratif la plus courante. Les dirigeants ne se partagent pas de bénéfices. Peut employer, facturer, accueillir.',
+        analogy: 'Le club de sport, l\'asso de parents d\'élèves, la chorale du village.',
+        chez_nous: 'Option sérieuse pour porter l\'exploitation. C\'est aussi là que serait logée la rémunération du dirigeant, séparée du fonds de dotation.'
+      },
+      'asso-1905': {
+        label: 'Association cultuelle (loi 1905)',
+        clair: 'Association réservée exclusivement au culte. Elle ne peut pas faire d\'accueil commercial ou d\'hôtellerie.',
+        analogy: 'Un club avec un règlement très strict : une seule chose autorisée, le culte, et rien d\'autre.',
+        chez_nous: '« Faux ami ». On ne peut pas y mettre l\'accueil ni les familles. Le culte relève de l\'évêque, pas d\'une asso 1905 contrôlée par le porteur.'
+      },
+      'asso-diocesaine': {
+        label: 'Association diocésaine',
+        clair: 'La structure juridique officielle d\'un diocèse, par laquelle l\'Église gère ses biens et son culte, sous l\'autorité de l\'évêque.',
+        analogy: 'La « maison mère » juridique de l\'Église locale.',
+        chez_nous: 'C\'est à elle (au diocèse) qu\'on confie la dimension cultuelle (chapelle, prêtre, messe) — pas à une asso 1905 bricolée.'
+      }
+    }
+  },
+  detention: {
+    label: 'Façons de détenir ou d\'occuper un bien',
+    terms: {
+      'bail-emphyteotique': {
+        label: 'Bail emphytéotique',
+        clair: 'Location de très longue durée (18 à 99 ans) où le locataire peut rénover et même emprunter en mettant le bail en garantie. À la fin, tout revient au propriétaire.',
+        analogy: 'Louer un local pour 99 ans : tu en fais ce que tu veux ou presque, mais ce n\'est jamais vraiment à toi.',
+        chez_nous: 'Piste préférée — la congrégation garde la propriété (vocation du lieu préservée), le fonds de dotation prend le bail. Dons défiscalisés pour les travaux, besoin de financement fortement réduit, verrou canonique allégé.'
+      },
+      'comodat': {
+        label: 'Comodat (prêt à usage)',
+        clair: 'On te prête gratuitement un bien ; tu l\'utilises, tu l\'entretiens, tu le rends. Pas de loyer.',
+        analogy: 'Un ami qui te prête son appartement pour quelques années.',
+        chez_nous: 'Forme légère possible si une congrégation veut confier son lieu sans le vendre ni le louer formellement.'
+      },
+      'nue-propriete': {
+        label: 'Nue-propriété / Usufruit',
+        clair: 'La propriété coupée en deux. L\'usufruitier utilise le bien et en perçoit les revenus. Le nu-propriétaire possède « sur le papier » mais ne peut pas s\'en servir pendant l\'usufruit.',
+        analogy: 'Le mécanisme classique des héritages : le conjoint garde l\'usufruit (habite la maison), les enfants ont la nue-propriété (héritent pleinement plus tard).',
+        chez_nous: 'Variante possible : la congrégation garde la nue-propriété (vocation du lieu) ; on a l\'usufruit (l\'usage).'
+      }
+    }
+  },
+  fiscal: {
+    label: 'Les notions fiscales',
+    terms: {
+      'interet-general': {
+        label: 'Intérêt général',
+        clair: 'La mission profite à tous / à une cause (patrimoine, culte, accueil), pas à un cercle privé. C\'est la condition pour délivrer des reçus fiscaux.',
+        analogy: 'La différence entre un club privé réservé à ses membres et une action ouverte à la collectivité.',
+        chez_nous: '« Sauver et faire vivre un patrimoine religieux + accueillir » coche cette case — à condition que la structure soit bien non lucrative.'
+      },
+      'mecenat': {
+        label: 'Mécénat / Reçu fiscal',
+        clair: 'Quand on donne à une structure d\'intérêt général, elle remet un reçu fiscal : le donateur récupère ~66 % de son don sur ses impôts (particulier), ~60 % (entreprise).',
+        analogy: 'Le reçu des Restos du Cœur : donner 100 €, ça ne coûte « vraiment » que ~34 € après impôt.',
+        chez_nous: 'C\'est le levier n°1 du financement. Seul le fonds de dotation peut le faire — une SCI, jamais.'
+      },
+      'gestion-desinteressee': {
+        label: 'Gestion désintéressée',
+        clair: 'Les dirigeants ne s\'enrichissent pas grâce à la structure. Ils sont bénévoles, ou très encadrés dans leur rémunération.',
+        analogy: 'Le président bénévole d\'une association : il dirige, mais ne se verse pas de salaire confortable.',
+        chez_nous: 'Point sensible. Si le porteur dirige et se rémunère tout en contrôlant le fonds de dotation, on perd cet avantage → perte du mécénat. Solution : loger la rémunération dans l\'exploitation, séparée du fonds.'
+      },
+      'gestion-fait': {
+        label: 'Gestion de fait',
+        clair: 'Quand quelqu\'un agit comme le vrai patron de fonds qu\'il n\'est pas censé contrôler.',
+        analogy: 'Tenir les cordons de la bourse en cachette alors que ce n\'est pas son rôle officiel.',
+        chez_nous: 'À éviter en séparant clairement qui dirige l\'exploitation et qui contrôle le fonds de dotation.'
+      },
+      'rescrit': {
+        label: 'Rescrit fiscal',
+        clair: 'On demande à l\'administration fiscale, à l\'avance et par écrit, si son montage est éligible. On obtient une réponse officielle sur laquelle on peut s\'appuyer.',
+        analogy: 'Demander à l\'arbitre avant le match si une action est autorisée, et avoir sa réponse noir sur blanc.',
+        chez_nous: 'Fortement conseillé pour sécuriser l\'éligibilité au mécénat avant de tout miser dessus.'
+      },
+      'requalification': {
+        label: 'Requalification',
+        clair: 'L\'administration « recolle la vraie étiquette ». Si elle estime que le non-lucratif fait en réalité du commerce, elle le requalifie et applique les impôts — parfois rétroactivement.',
+        analogy: 'Un employeur qui paie en « notes de frais » pour cacher un salaire : l\'URSSAF requalifie et réclame les cotisations.',
+        chez_nous: 'Le grand danger. Trop d\'activités commerciales dans la structure non lucrative → requalification → perte du mécénat.'
+      },
+      'sectorisation': {
+        label: 'Sectorisation / Filialisation',
+        clair: 'Ranger les activités commerciales dans un compartiment à part (compta séparée ou société-fille) pour qu\'elles ne contaminent pas le non-lucratif.',
+        analogy: 'Une cloison étanche dans un bateau : si le compartiment commercial prend l\'eau, l\'œuvre ne coule pas.',
+        chez_nous: 'Probablement nécessaire pour le coworking / la garde / la boutique, pour protéger le mécénat.'
+      },
+      'dotation-inaliénable': {
+        label: 'Dotation inaliénable / consomptible',
+        clair: 'Deux réglages d\'un fonds de dotation. Consomptible = on peut dépenser le capital. Non consomptible = on ne touche que les revenus. Inaliénable = un bien ne peut jamais être revendu.',
+        analogy: 'Un livret : soit on pioche dans le capital, soit on ne touche que les intérêts. « Inaliénable » = soudé à la mission pour toujours.',
+        chez_nous: 'Rendre l\'abbaye inaliénable la sanctuarise (rassurant pour donateurs et congrégation), mais c\'est irréversible — à choisir en conscience.'
+      },
+      'devolution': {
+        label: 'Dévolution',
+        clair: 'La règle qui dit où vont les biens si la structure ferme. Pour un fonds de dotation : à une autre œuvre d\'intérêt général, jamais aux fondateurs.',
+        analogy: 'Un testament imposé : en cas de dissolution, tout va à une autre bonne cause.',
+        chez_nous: 'Ce qui rassure une congrégation — si le projet s\'arrête, l\'abbaye reste dans le monde de l\'Église, elle n\'est pas privatisée.'
+      }
+    }
+  },
+  conformite: {
+    label: 'Conformité & autorisations',
+    terms: {
+      'verrou-canonique': {
+        label: 'Verrou canonique',
+        clair: 'L\'Église a ses propres règles pour vendre ses biens. Au-dessus de ~2,5 M€, il faut l\'autorisation de Rome, et la vente doit se faire à un « juste prix ».',
+        analogy: 'Une grande entreprise où une grosse vente doit être validée par le siège mondial — ici, le « siège », c\'est le Vatican.',
+        chez_nous: '« Vendez-nous l\'abbaye pas cher parce que c\'est une œuvre » est paradoxalement plus difficile à faire passer (ça ressemble à un bradage). Pousse fortement vers le bail plutôt que l\'achat.'
+      },
+      'erp': {
+        label: 'ERP — Établissement Recevant du Public',
+        clair: 'Tout lieu ouvert au public doit respecter des normes de sécurité (incendie, évacuation) et d\'accessibilité (handicap), et passer une commission de sécurité.',
+        analogy: 'Un cinéma, un hôtel, une salle des fêtes : autant d\'ERP soumis à contrôle.',
+        chez_nous: 'Dès qu\'on accueille, on est un ERP. Avec des chambres (« locaux à sommeil »), les normes incendie sont renforcées — poste travaux probablement sous-estimé.'
+      },
+      'mh-abf': {
+        label: 'Monuments Historiques / ABF',
+        clair: 'Un bâtiment classé/inscrit est protégé : les travaux doivent être validés par l\'Architecte des Bâtiments de France. Contraintes, mais aussi aides (DRAC, Fondation du patrimoine).',
+        analogy: 'Changer ses fenêtres dans un centre-ville historique : il faut l\'accord de l\'ABF.',
+        chez_nous: 'Une abbaye est souvent MH → travaux plus chers et longs. Attention : l\'avantage fiscal MH classique ne marche pas pour une structure non lucrative — ne pas le compter.'
+      },
+      'acm': {
+        label: 'ACM — Accueil Collectif de Mineurs',
+        clair: 'Le cadre réglementé dès qu\'on garde des enfants en groupe sans leurs parents : déclaration à l\'État, taux d\'encadrement, diplômes BAFA/BAFD, avis PMI pour les moins de 6 ans.',
+        analogy: 'Une colonie de vacances ou un centre de loisirs : très encadré, pas de la garde à la bonne franquette.',
+        chez_nous: 'Point chaud. Si les parents coworkent pendant que les enfants sont gardés, on bascule probablement en ACM — lourd et coûteux. À faire qualifier par écrit avant toute communication.'
+      },
+      'safeguarding': {
+        label: 'Safeguarding (protection des mineurs)',
+        clair: 'Vérifier que toute personne au contact d\'enfants n\'a pas d\'antécédent judiciaire, et mettre en place une politique de protection (référent, formation, règles de présence).',
+        analogy: 'Les contrôles obligatoires des encadrants dans le sport ou l\'animation — renforcés depuis les scandales récents.',
+        chez_nous: 'Non négociable dans un lieu catholique post-CIASE. Une seule défaillance peut détruire le projet et le mécénat.'
+      }
+    }
+  }
+};
+
+/* === QUESTIONS DATA === */
+const VERROUS = [
+  { id:'V1',
+    question:'A-t-on un partenaire d\'Église identifié — une <span class="term" data-key="congregation">congrégation</span> ou un <span class="term" data-key="diocese">diocèse</span> — qui soutient ce projet&nbsp;?',
+    detail:'Pas simplement « le milieu catholique en général », mais un interlocuteur nommé, prêt à mettre à disposition ou conventionner un lieu, et à accompagner la démarche de son autorité.',
+    pourquoi:'C\'est le facteur de réussite le plus structurant. Un partenaire ecclésial bien identifié débloque à la fois l\'accès à un lieu à des conditions accessibles, la crédibilité auprès des mécènes catholiques, l\'autorisation de célébrer le culte sur place, et le bouche-à-oreille naturel vers les retraitants et pèlerins. Plus tôt il est impliqué, mieux tout le reste se construit.',
+    change:'Sans cet ancrage ecclésial, les <span class="term" data-key="mecenat">dons défiscalisés</span> seront plus difficiles à mobiliser — les grandes fondations d\'Église financent plus facilement des projets adossés à l\'institution. Ce n\'est pas impossible, mais c\'est un point à travailler tôt et sérieusement.' },
+  { id:'V2',
+    question:'Quel modèle économique assume-t-on&nbsp;: une œuvre portée durablement par les dons, ou une activité qui doit s\'autofinancer&nbsp;?',
+    detail:'La réponse détermine la structure juridique, le type de financement, et ce qu\'on peut promettre aux mécènes.',
+    pourquoi:'Ces deux modèles ne s\'excluent pas totalement, mais ils appellent des choix différents. Une <strong>œuvre</strong> (non lucrative, adossée au <span class="term" data-key="mecenat">mécénat</span> de façon structurelle) repose sur un <span class="term" data-key="fonds-dotation">fonds de dotation</span> et une <span class="term" data-key="gestion-desinteressee">gestion désintéressée</span> — c\'est ce qui permet les reçus fiscaux pour les donateurs. Une <strong>activité autofinancée</strong> a besoin de marges réelles et peut accueillir des investisseurs. Viser « tout juste l\'équilibre » sans dons réguliers, c\'est fragile : un imprévu (toiture, mauvaise saison) suffit à mettre le lieu en difficulté. Mieux vaut anticiper cela dès le départ.',
+    change:'Si c\'est une œuvre&nbsp;: le <span class="term" data-key="mecenat">mécénat</span> est un pilier durable (pas seulement de démarrage), et la structure juridique — notamment la place de la <span class="term" data-key="sci">SCI</span> privée — doit être alignée avec ce choix. Clarifier cela tôt évite des contradictions entre ce qu\'on dit aux mécènes et ce que le montage permet réellement.' },
+  { id:'V3',
+    question:'Acheter le lieu, ou en recevoir l\'usage par un bail ou une convention de longue durée&nbsp;?',
+    detail:'La <span class="term" data-key="congregation">congrégation</span> vend-elle en pleine propriété, ou garde-t-elle les murs en proposant un <span class="term" data-key="bail-emphyteotique">bail emphytéotique</span> ou une convention d\'occupation&nbsp;?',
+    pourquoi:'L\'achat d\'un bien appartenant à une congrégation déclenche une procédure d\'autorisation auprès du Saint-Siège (le <span class="term" data-key="verrou-canonique">verrou canonique</span>&nbsp;: délai 12-24 mois, résultat incertain), et oblige à négocier un « juste prix » canon qui peut compliquer toute cession favorable. Un <span class="term" data-key="bail-emphyteotique">bail emphytéotique</span> de longue durée (18 à 99 ans) pris par le <span class="term" data-key="fonds-dotation">fonds de dotation</span> est souvent plus simple&nbsp;: la congrégation garde la propriété (ce qui la rassure), les dons peuvent financer les travaux de rénovation, et le besoin total de financement est réduit.',
+    change:'Explorer la voie du bail en priorité, en concertation avec la congrégation, un notaire et un canoniste. Si l\'achat reste nécessaire, il faut prévoir un calendrier long et un budget réaliste incluant les droits de mutation (DMTO). Dans tous les cas, la réponse à cette question détermine la structure juridique à retenir.' }
+];
+
+const THEMES = [
+  { id:'theme-1', num:'1', label:'Thème 1', title:'Le sens et l\'appel', duree:'~5 min',
+    desc:'Ces questions aident à nommer ce qui est au cœur du projet — ce qui donne envie, et comment le rendre solide et durable pour les personnes qui viendront.',
+    questions:[
+      { id:'1-1',
+        question:'Comment s\'assurer que le lieu trouvera son public&nbsp;?',
+        detail:'Retraitants, pèlerins, groupes, familles — qui sont concrètement les personnes attendues, et comment sait-on qu\'elles cherchent ce type de lieu&nbsp;?',
+        pourquoi:'Identifier le public et comprendre ce qui l\'attire est la condition d\'un modèle économique solide. Ce travail peut s\'appuyer sur des échanges avec des personnes intéressées, des comparaisons avec des lieux similaires, ou des enquêtes simples. Plus il est fait tôt, plus il sécurise les projections et permet d\'ajuster l\'offre avant l\'ouverture.',
+        change:'Cette réflexion permet de définir le positionnement du lieu — son âme, son offre spécifique — de façon à ce qu\'il attire vraiment les personnes pour qui il est conçu.' },
+      { id:'1-2',
+        question:'Quel est le « pourquoi venir ici » que les personnes ne trouvent pas ailleurs&nbsp;?',
+        detail:'Des maisons diocésaines, des monastères et des sanctuaires accueillent déjà. Qu\'est-ce que ce lieu offre de spécifique — une identité, une atmosphère, un accompagnement, une qualité d\'accueil — qui justifie le choix et fidélise&nbsp;?',
+        pourquoi:'Ce n\'est pas une mise en concurrence, c\'est une question utile à poser tôt. Nommer clairement le différenciateur du lieu aide à communiquer, à former l\'équipe d\'accueil, et à construire une communauté de soutien fidèle. Un lieu qui sait ce qu\'il est remplit plus facilement ses séjours qu\'un lieu qui ressemble à d\'autres.',
+        change:'Une réponse précise ici nourrit directement le discours aux mécènes, aux futurs résidents et aux premiers retraitants. Elle oriente aussi les choix d\'aménagement et de programmation.' },
+      { id:'1-3',
+        question:'Comment consolider et organiser le pilier familles&nbsp;?',
+        detail:'L\'accueil des familles pendant les vacances scolaires, et les retraites/silence hors vacances, forment une complémentarité saisonnière bien pensée. Pour qu\'elle fonctionne, il faut l\'organiser&nbsp;: valider la demande, dimensionner les espaces, et qualifier les activités.',
+        pourquoi:'Ce segment représente une part importante du chiffre d\'affaires projeté. Le consolider demande de vérifier concrètement la demande (familles intéressées, tarifs acceptables), de résoudre les questions d\'espace (séparation silence/vie familiale) et de qualifier la garde d\'enfants — qui peut déclencher un cadre réglementaire spécifique (voir thème 5). Ce travail de validation renforce le projet, il ne le remet pas en cause.',
+        change:'Si la demande est confirmée et l\'organisation rodée, ce pilier est une vraie force du modèle. Si elle reste incertaine, mieux vaut revoir les projections financières pour partir sur des bases honnêtes.' }
+    ]
+  },
+  { id:'theme-2', num:'2', label:'Thème 2', title:'L\'Église et la vocation du lieu', duree:'~8 min',
+    desc:'La relation avec le <span class="term" data-key="diocese">diocèse</span> et la <span class="term" data-key="congregation">congrégation</span> n\'est pas une formalité — elle conditionne la légitimité du projet, son financement et son identité profonde.',
+    questions:[
+      { id:'2-1',
+        question:'L\'évêque du <span class="term" data-key="diocese">diocèse</span> a-t-il donné son accord pour la vocation du lieu et sa dimension cultuelle&nbsp;?',
+        detail:'Le culte public (messe régulière, tabernacle, chapelle ouverte) relève de l\'évêque — c\'est lui qui en autorise l\'exercice sur son territoire.',
+        pourquoi:'Sans accord diocésain, la dimension catholique et cultuelle du projet n\'a pas de base canonique. Cette démarche est aussi l\'occasion de construire une relation de confiance avec l\'institution ecclésiale locale, ce qui ouvre des portes — recommandations, réseaux, prescription. Un accord formel (convention ou courrier) vaut beaucoup plus qu\'un accord verbal.',
+        change:'C\'est une étape à engager tôt, de façon ouverte et humble. La plupart des évêques sont bienveillants vis-à-vis de projets sérieux qui souhaitent animer un lieu de patrimoine.' },
+      { id:'2-2',
+        question:'Comment le culte est-il porté, et par qui — sans confondre autorité spirituelle et direction économique&nbsp;?',
+        detail:'Confier le culte à une <span class="term" data-key="asso-1905">association cultuelle 1905</span> contrôlée par le porteur serait une erreur de montage — cet outil a un objet exclusivement cultuel et ne peut pas gérer l\'accueil ou l\'hébergement. La solution naturelle est de le confier au <span class="term" data-key="diocese">diocèse</span> (<span class="term" data-key="asso-diocesaine">association diocésaine</span> / convention).',
+        pourquoi:'Séparer l\'autorité spirituelle (confiée au diocèse) et la direction économique (portée par l\'exploitation) protège tout le monde — le porteur, les résidents, les bénévoles. Elle évite aussi les situations où une même personne serait à la fois figure spirituelle et employeur de ceux qui vivent sous sa responsabilité, ce qui peut créer des situations délicates.',
+        change:'Cette séparation est une bonne nouvelle, pas une contrainte. Elle clarifie les rôles, simplifie le montage et renforce la crédibilité du projet vis-à-vis des institutions.' },
+      { id:'2-3',
+        question:'Comment concilier une cession à prix accessible et les exigences du droit canon&nbsp;?',
+        detail:'Le droit de l\'Église impose un « juste prix » pour la vente de ses biens. Une cession à prix réduit au nom du caractère de l\'œuvre peut paradoxalement rendre l\'autorisation du Saint-Siège plus difficile à obtenir — elle peut être perçue comme un bradage du patrimoine.',
+        pourquoi:'Cette tension mérite d\'être anticipée avec un canoniste avant d\'entrer en négociation. Elle pousse souvent vers la voie du <span class="term" data-key="bail-emphyteotique">bail emphytéotique</span> plutôt que l\'achat — qui permet une cession favorable sans aliéner le bien. C\'est souvent une solution plus simple et plus rassurante pour la congrégation.',
+        change:'Clarifier ce point tôt évite des mois de négociation qui se révèlent bloqués par une procédure canonique. La voie du bail peut désamorcer cette difficulté.' },
+      { id:'2-4',
+        question:'Peut-on s\'adosser à une <span class="term" data-key="fondation-abritee">fondation d\'Église existante</span> plutôt que de tout créer from scratch&nbsp;?',
+        detail:'Loger le projet sous une fondation reconnue (ex. Fondation des Monastères, fondation diocésaine) plutôt que de créer son propre fonds de dotation peut simplifier considérablement le démarrage.',
+        pourquoi:'Une <span class="term" data-key="fondation-abritee">fondation abritée</span> apporte d\'emblée une structure fiscale éprouvée, une crédibilité institutionnelle et une capacité à délivrer des <span class="term" data-key="mecenat">reçus fiscaux</span> sans avoir à passer par un <span class="term" data-key="rescrit">rescrit fiscal</span> préalable. Elle rassure les mécènes, la congrégation et les autorités diocésaines en une seule démarche. C\'est la piste qui simplifie le plus de problèmes à la fois.',
+        change:'À explorer en premier — une réunion avec la Fondation des Monastères ou un responsable diocésain peut suffire à évaluer la faisabilité en quelques semaines.' }
+    ]
+  },
+  { id:'theme-3', num:'3', label:'Thème 3', title:'La structure et la propriété', duree:'~10 min',
+    desc:'Ces décisions sont presque irréversibles. Elles déterminent qui peut recevoir les dons, qui détient les murs, qui encaisse les recettes — et comment ces flux restent sains.',
+    questions:[
+      { id:'3-1',
+        question:'Comment articuler le <span class="term" data-key="fonds-dotation">fonds de dotation</span> et la <span class="term" data-key="sci">SCI</span> — le montage à deux poches&nbsp;?',
+        detail:'Le montage clarifié distingue deux poches&nbsp;: le <span class="term" data-key="fonds-dotation">fonds de dotation</span> détient les murs « patrimoniaux/catho » financés par les dons ; la <span class="term" data-key="sci">SCI</span> détient les murs « côté exploitation » financés par capital + emprunt (jamais par les dons).',
+        pourquoi:'Cette séparation est ce qui rend le montage cohérent&nbsp;: les donateurs savent que leurs dons financent le patrimoine et la mission, pas des murs privés. Seul le <span class="term" data-key="fonds-dotation">fonds de dotation</span> peut délivrer des <span class="term" data-key="mecenat">reçus fiscaux</span> — une SCI ne le peut pas. La frontière entre les deux poches doit être documentée clairement avec le notaire et l\'expert-comptable pour qu\'elle soit incontestable.',
+        change:'Travailler avec le juriste pour que la ligne de partage entre « murs patrimoniaux » (fonds) et « murs exploitation » (SCI) soit nette et auditable. C\'est ce qui permet de présenter le montage aux mécènes avec confiance.' },
+      { id:'3-2',
+        question:'Le <span class="term" data-key="mecenat">mécénat</span> peut-il financer les travaux prévus — et comment le sécuriser&nbsp;?',
+        detail:'Des dons défiscalisés finançant des travaux sur des murs privés expose à une <span class="term" data-key="requalification">requalification</span> et à la perte du statut d\'<span class="term" data-key="interet-general">intérêt général</span>.',
+        pourquoi:'Ce point est souvent sous-estimé. Si les murs financés par les dons sont dans une structure privée plutôt que dans le fonds de dotation, l\'éligibilité fiscale des dons peut être remise en cause — rétroactivement. Un <span class="term" data-key="rescrit">rescrit fiscal</span> (réponse écrite de l\'administration) est la façon la plus sûre de sécuriser ce point avant de lancer toute collecte.',
+        change:'Demander un rescrit fiscal dès que le montage est stabilisé, avant la première communication vers les mécènes. C\'est une démarche simple qui protège tout le projet.' },
+      { id:'3-3',
+        question:'Souhaite-t-on accueillir des investisseurs avec une perspective de sortie sur les murs&nbsp;?',
+        detail:'La <span class="term" data-key="sci">SCI</span> est l\'outil qui permet d\'accueillir des associés investisseurs espérant une plus-value à la revente. Dans le montage actuel, le capital est modeste (~0,5 M€).',
+        pourquoi:'Si la réponse est non, le montage se simplifie&nbsp;: bail au fonds de dotation, moins de SCI, moins de complexité. Si la réponse est oui, il faut que ce soit compatible avec le modèle d\'œuvre retenu — et que cela soit assumé clairement vis-à-vis des mécènes, qui pourraient s\'en étonner.',
+        change:'Cette clarification est utile à faire tôt — elle influence directement le montage juridique et la façon dont on présente le projet.' },
+      { id:'3-4',
+        question:'La <span class="term" data-key="congregation">congrégation</span> préfère-t-elle vendre, ou garder la propriété en accordant un bail de longue durée&nbsp;?',
+        detail:'La voie du <span class="term" data-key="bail-emphyteotique">bail emphytéotique</span> pris par le <span class="term" data-key="fonds-dotation">fonds de dotation</span> présente souvent des avantages importants&nbsp;: la congrégation garde la propriété (ce qui la rassure), le <span class="term" data-key="verrou-canonique">verrou canonique</span> est allégé, et les dons peuvent financer les travaux directement.',
+        pourquoi:'Cette question est à traiter ensemble avec la congrégation, un notaire et un canoniste. La voie du bail est souvent plus simple et plus rapide qu\'un achat — mais elle demande que la congrégation soit à l\'aise avec une occupation longue durée par un tiers. Un dialogue ouvert en amont, avant de fixer des positions, permet souvent de trouver la formule qui convient à tous.',
+        change:'Une réunion de travail commune (porteur + congrégation + notaire) peut permettre de clarifier ce point en quelques semaines et de choisir la voie la mieux adaptée.' },
+      { id:'3-5',
+        question:'Choisit-on une <span class="term" data-key="dotation-inaliénable">dotation inaliénable</span> (le lieu ne pourra jamais être revendu) ou consomptible (le capital peut être utilisé)&nbsp;?',
+        detail:'C\'est un choix fondateur du <span class="term" data-key="fonds-dotation">fonds de dotation</span>, quasi irréversible une fois acté.',
+        pourquoi:'Rendre l\'abbaye inaliénable envoie un signal fort aux donateurs et à la congrégation&nbsp;: le lieu est « sanctuarisé » au service de la mission, la règle de <span class="term" data-key="devolution">dévolution</span> garantit que si le projet s\'arrête, le lieu reste dans le monde de l\'Église. C\'est rassurant pour tout le monde. En contrepartie, l\'inaliénabilité est définitive — elle mérite d\'être choisie en conscience et non par défaut.',
+        change:'Prendre ce choix explicitement, en le nommant dans les statuts, plutôt que de le laisser ouvert. C\'est ce qui donne aux donateurs les plus engagés la confiance d\'un don important.' }
+    ]
+  },
+  { id:'theme-4', num:'4', label:'Thème 4', title:'Le modèle économique et le financement', duree:'~10 min',
+    desc:'Ces questions aident à vérifier que les projections sont honnêtes et que le projet peut absorber les aléas inévitables d\'un tel lieu.',
+    questions:[
+      { id:'4-1',
+        question:'Le modèle économique intègre-t-il tous les coûts réels, y compris les provisions pour grosses réparations&nbsp;?',
+        detail:'Le point mort projeté est proche du chiffre d\'affaires attendu (marge ~3 %), avant même de compter les provisions pour entretien patrimoine (~40 k€/an), le renouvellement du mobilier et matériel (~50 k€/an) et la masse salariale réelle (souvent 42-45 % du CA, pas 35 %).',
+        pourquoi:'Une abbaye ancienne a des coûts d\'entretien élevés et imprévisibles. Une marge de 3 % ne laisse aucun espace pour absorber une mauvaise saison, une réparation urgente ou un arrêt maladie prolongé. Anticiper ces coûts dès le BP n\'est pas pessimiste — c\'est ce qui permet de construire un projet qui tient dans la durée. Mieux vaut viser un flux net d\'au moins 150 k€ après provisions pour avoir une vraie marge de manœuvre.',
+        change:'Refaire les projections avec ces coûts réintégrés permet d\'ajuster le modèle (tarifs, capacité, mix de revenus) plutôt que de découvrir le problème après l\'ouverture.' },
+      { id:'4-2',
+        question:'Le plan de mécénat s\'appuie-t-il sur des mécènes/fondations identifiés, avec un premier socle concret&nbsp;?',
+        detail:'Les grandes fondations d\'Église financent plus facilement des projets adossés à l\'institution ecclésiale. Sans partenaire de référence, le mécénat est plus long à mobiliser.',
+        pourquoi:'Un plan de mécénat crédible repose sur quelques mécènes « socle » identifiés (fondations, grands donateurs, structures diocésaines) qui donnent confiance aux autres. Cette mobilisation est plus facile quand le projet a un partenaire ecclésial fort (lien avec la question V1) et une structure fiscale sécurisée (lien avec 3.2). Commencer à identifier ces premiers mécènes tôt, même avant l\'ouverture officielle de la collecte, est un investissement utile.',
+        change:'Nommer un premier cercle de mécènes potentiels et planifier les premiers contacts avant d\'engager les travaux. L\'alliance ecclésiale est souvent la clé pour ouvrir ces portes.' },
+      { id:'4-3',
+        question:'Le coût réel des travaux a-t-il été évalué par des professionnels spécialisés&nbsp;?',
+        detail:'Les normes <span class="term" data-key="erp">ERP</span> pour les locaux à sommeil, l\'accessibilité et les contraintes liées aux <span class="term" data-key="mh-abf">Monuments Historiques</span> peuvent multiplier le budget travaux par un facteur 2 à 4 par rapport à une première estimation.',
+        pourquoi:'Un pré-diagnostic technique réalisé par un bureau de contrôle, une maîtrise d\'œuvre patrimoine et l\'Architecte des Bâtiments de France (ABF) est la première dépense à engager — c\'est une petite somme comparée au risque qu\'elle permet d\'éviter. Tant que ce diagnostic n\'est pas fait, toutes les projections financières restent indicatives.',
+        change:'Programmer ce pré-diagnostic dès que le lieu est identifié. Ses résultats permettent de fiabiliser l\'ensemble du dossier financier et de présenter des chiffres solides aux mécènes et aux banques.' },
+      { id:'4-4',
+        question:'Quel matelas de trésorerie est prévu pour les deux premières années et les imprévus&nbsp;?',
+        detail:'Le besoin total estimé est d\'environ 4,8-5,0 M€ (travaux + frais) + une trésorerie de démarrage d\'environ 0,8 M€ pour couvrir les pertes des deux premières années de montée en charge.',
+        pourquoi:'Les deux premières années d\'un lieu de ce type sont rarement à l\'équilibre. La montée en charge (remplissage progressif, bouche-à-oreille, fidélisation) prend du temps. Sans trésorerie de sécurité dédiée, un imprévu peut mettre le projet en difficulté juste au moment où il commence à se consolider. Cette réserve n\'est pas un luxe — c\'est ce qui permet de tenir les engagements envers les résidents, les salariés et les mécènes.',
+        change:'Intégrer cette trésorerie de sécurité dans le plan de financement dès le départ, et prévoir que la dette bancaire reste contenue (idéalement sous 1,5 M€) pour ne pas alourdir les annuités.' },
+      { id:'4-5',
+        question:'Les activités de garde et de coworking sont-elles présentées dans le BP comme des activités de service, distinctes des revenus principaux&nbsp;?',
+        detail:'Ces activités peuvent représenter ~170 k€ de chiffre d\'affaires, mais leur contribution au résultat est quasi nulle une fois comptés les coûts d\'encadrement spécifiques.',
+        pourquoi:'Les présenter comme des leviers d\'équilibre fausserait les projections. Ce sont des services qui enrichissent l\'expérience des familles et valorisent le lieu — pas des sources de profit. Les isoler dans le BP permet de voir clairement ce qui finance réellement le lieu (retraites, familles, hébergement) et ce qui relève du service annexe.',
+        change:'Retraiter le BP pour que l\'équilibre du cœur d\'activité soit visible sans ces lignes. Cela donne une image plus honnête et rassure les financeurs sur la solidité du modèle de base.' },
+      { id:'4-6',
+        question:'Le plan de financement tient-il compte du fait que l\'avantage fiscal <span class="term" data-key="mh-abf">Monuments Historiques</span> ne s\'applique pas à une structure non lucrative&nbsp;?',
+        detail:'L\'avantage fiscal MH (déduction des travaux sur l\'impôt personnel) bénéficie à un propriétaire privé imposable — pas à un fonds de dotation ni à un emphytéote non lucratif.',
+        pourquoi:'Si ce poste a été intégré dans les projections, il faut le retirer — sinon les chiffres sont surestimés. En revanche, d\'autres aides restent accessibles aux non-lucratifs&nbsp;: subventions DRAC, Fondation du patrimoine, Loto du patrimoine. Ce sont ces pistes qui méritent d\'être valorisées.',
+        change:'Vérifier que le plan de financement ne fait pas reposer d\'économie sur cet avantage fiscal, et lister les aides publiques réellement disponibles pour le type de structure retenu.' }
+    ]
+  },
+  { id:'theme-5', num:'5', label:'Thème 5', title:'La protection des personnes et la conformité', duree:'~8 min',
+    desc:'Ces questions protègent les personnes — les enfants, les résidents, les salariés — et par là-même le projet. Les anticiper tôt est bien moins coûteux que de les découvrir tard.',
+    questions:[
+      { id:'5-1',
+        question:'Comment qualifier l\'offre de garde d\'enfants pour qu\'elle soit conforme et bien intégrée dans le BP&nbsp;?',
+        detail:'Dès lors que des enfants sont gardés en groupe pendant que leurs parents coworkent ou se reposent, on entre dans le cadre réglementé de l\'<span class="term" data-key="acm">Accueil Collectif de Mineurs</span> (déclaration SDJES, encadrants BAFA/BAFD, PMI pour les moins de 6 ans).',
+        pourquoi:'Ce cadre n\'est pas un obstacle, c\'est un cadre sécurisant — pour les enfants et pour le projet. Le qualifier par avance permet de dimensionner correctement les coûts RH et d\'assurance dans le BP, et d\'éviter toute ambiguïté dans la communication aux familles. La qualification formelle par l\'administration est aussi une forme de validation qui renforce la crédibilité de l\'offre.',
+        change:'Solliciter la SDJES (Direction Départementale) pour une qualification écrite avant toute communication publique sur cet aspect. Intégrer les coûts réels dans les projections financières du segment familles.' },
+      { id:'5-2',
+        question:'La politique de protection des mineurs est-elle documentée et opérationnelle avant l\'accueil du premier enfant&nbsp;?',
+        detail:'Vérification d\'honorabilité (casier judiciaire B2, fichier FIJAISV) pour tous les salariés, bénévoles et résidents en contact avec des enfants. Référent, formation, règles de présence. Niveau diocésain de <span class="term" data-key="safeguarding">safeguarding</span>.',
+        pourquoi:'Dans un lieu catholique, la politique de protection des enfants est d\'une importance particulière depuis les recommandations de la CIASE. Elle protège les enfants accueillis, les familles qui font confiance au lieu, les bénévoles et salariés, et le projet lui-même. Ce n\'est pas une ligne de plus dans un règlement — c\'est un engagement qui doit être visible et vérifié.',
+        change:'Rédiger la politique de protection avant l\'ouverture, nommer un référent, former l\'équipe, et communiquer cette politique aux familles comme une preuve de sérieux. S\'appuyer sur les ressources et les référentiels diocésains disponibles.' },
+      { id:'5-3',
+        question:'Le cadre juridique des résidents est-il sécurisé — pour eux et pour le projet&nbsp;?',
+        detail:'Le risque juridique est triple&nbsp;: requalification en salariat (URSSAF), requalification du logement en bail d\'habitation loi 89 (occupants quasi-inexpulsables), ou avantage en nature non déclaré.',
+        pourquoi:'Les résidents sont à la fois une force humaine et un point de fragilité juridique si leur cadre n\'est pas clair. Un cadre bien conçu (convention d\'occupation à titre précaire, séparation des rôles) protège tout le monde — les résidents, qui savent à quoi ils s\'engagent, et le projet, qui peut faire confiance à un cadre stable. Ce travail demande l\'intervention d\'un avocat spécialisé, mais il est simple à faire une fois qu\'on sait ce qu\'on veut.',
+        change:'Rédiger avec un avocat une convention-type pour les résidents avant tout recrutement. La clarté du cadre est aussi ce qui attire les bons profils.' },
+      { id:'5-4',
+        question:'Comment organiser les activités commerciales (familles, coworking, garde) pour protéger le statut non lucratif du fonds de dotation&nbsp;?',
+        detail:'Plus les activités commerciales sont importantes à l\'intérieur de la structure non lucrative, plus le risque de <span class="term" data-key="requalification">requalification</span> fiscale augmente. La règle des 4P (Produit, Public, Prix, Publicité) permet d\'évaluer si une activité reste dans le champ non lucratif.',
+        pourquoi:'La <span class="term" data-key="sectorisation">sectorisation ou filialisation</span> des activités commerciales dans une entité distincte (association 1901 ou SAS d\'exploitation) est la solution naturelle. Elle protège le statut fiscal du fonds de dotation — et donc les <span class="term" data-key="mecenat">reçus fiscaux</span> — tout en permettant de développer librement les activités commerciales dans la structure adaptée. C\'est une organisation courante, bien connue des juristes spécialisés.',
+        change:'Définir avec l\'expert-comptable et le juriste quelles activités restent dans le fonds et lesquelles sont portées par l\'exploitation. Un <span class="term" data-key="rescrit">rescrit fiscal</span> sécurise l\'ensemble avant le démarrage.' },
+      { id:'5-5',
+        question:'Le plan des locaux intègre-t-il un zonage qui sépare les différents usages et protège chaque groupe&nbsp;?',
+        detail:'Séparer physiquement les espaces réservés aux retraitants (silence), aux familles (vie animée), aux résidents (privé) et aux zones cultuelles est à la fois une exigence de <span class="term" data-key="safeguarding">safeguarding</span> et la condition de la complémentarité saisonnière.',
+        pourquoi:'Un bon plan de lieu résout beaucoup de problèmes à la fois. Il permet à des retraitants de vivre dans le silence même quand des familles sont présentes dans une autre aile. Il sépare physiquement les mineurs des adultes non qualifiés. Et il donne à chacun un espace clairement identifié. Ce zonage est à considérer comme un critère de choix du bien, pas comme une adaptation ultérieure.',
+        change:'Faire analyser le plan du lieu pressenti (ou de tout lieu candidat) à la lumière de ce zonage, idéalement avec un architecte et un référent safeguarding, dès le pré-diagnostic.' }
+    ]
+  },
+  { id:'theme-6', num:'6', label:'Thème 6', title:'Le porteur et la gouvernance', duree:'~8 min',
+    desc:'Ces questions aident le porteur à se situer honnêtement, à identifier ce qu\'il lui faut compléter, et à construire une gouvernance qui protège tout le monde.',
+    questions:[
+      { id:'6-1',
+        question:'La triple légitimité — spirituelle, gestionnaire, ecclésiale — est-elle réunie, ou comment la compléter&nbsp;?',
+        detail:'Diriger un lieu d\'Église qui accueille, emploie des salariés et porte un mécénat suppose trois compétences rarement réunies chez une seule personne.',
+        pourquoi:'Identifier honnêtement ce qui est bien couvert et ce qui manque n\'est pas une remise en cause du porteur — c\'est une base saine pour compléter l\'équipe. Une double compétence (porteur + directeur d\'exploitation aguerri) est souvent plus solide qu\'une compétence unique. De même, un accompagnement spirituel extérieur et un ancrage ecclésial identifié compensent ce qui ne peut venir que de l\'institution.',
+        change:'Dresser une carte honnête des forces et des manques, puis nommer les personnes ou institutions qui pourraient compléter l\'équipe de direction et d\'accompagnement.' },
+      { id:'6-2',
+        question:'L\'autorité spirituelle est-elle bien séparée de la direction économique — pour protéger tous ceux qui vivront sous ce toit&nbsp;?',
+        detail:'Quand une même personne est à la fois responsable économique et figure spirituelle d\'une communauté qui vit, travaille et se loge sous son autorité, la confusion des rôles peut créer des situations difficiles — pour les résidents, pour les salariés, et pour le porteur lui-même.',
+        pourquoi:'Confier la dimension spirituelle au <span class="term" data-key="diocese">diocèse</span> (un aumônier, une convention avec l\'évêché) et garder la direction économique clairement distincte est une protection pour tout le monde. Ce n\'est pas une perte de sens ou d\'identité — c\'est ce qui permet à chacun d\'être à sa place et d\'exercer son rôle en confiance. Les lieux les mieux organisés dans l\'Église fonctionnent avec cette séparation.',
+        change:'Structurer cette séparation dès la conception du projet, en nommant qui exerce quelle autorité, et en la formalisant dans les statuts et les conventions.' },
+      { id:'6-3',
+        question:'La rémunération du porteur est-elle logée dans la bonne structure pour préserver la <span class="term" data-key="gestion-desinteressee">gestion désintéressée</span>&nbsp;?',
+        detail:'Si le porteur dirige et se rémunère tout en contrôlant le <span class="term" data-key="fonds-dotation">fonds de dotation</span>, le statut de <span class="term" data-key="gestion-desinteressee">gestion désintéressée</span> peut être remis en cause — ce qui fait perdre l\'exonération fiscale et peut constituer une <span class="term" data-key="gestion-fait">gestion de fait</span>.',
+        pourquoi:'La solution est simple et bien connue&nbsp;: loger la rémunération du porteur dans la structure d\'exploitation (association 1901 ou SAS), séparée du fonds de dotation. Le porteur peut tout à fait être salarié de l\'exploitation tout en étant bénévole dirigeant du fonds. C\'est une organisation courante et reconnue.',
+        change:'Vérifier ce point avec l\'expert-comptable lors de la rédaction des statuts. C\'est une décision à prendre une fois au démarrage, pas à corriger en cours de route.' },
+      { id:'6-4',
+        question:'La gouvernance prévoit-elle des contre-pouvoirs réels et une organisation en cas d\'absence ou de coup dur&nbsp;?',
+        detail:'Un projet porté par une seule personne, sans suppléance ni conseil actif, est exposé à un point de défaillance unique — que ce soit une maladie, un désaccord ou une crise.',
+        pourquoi:'Un conseil d\'administration ou un comité de gouvernance actif (pas de façade) est d\'abord une protection pour le porteur lui-même. Il distribue les responsabilités, apporte des perspectives différentes, et garantit la continuité du projet si quelque chose arrive. Pour les mécènes et la congrégation, c\'est aussi un signe de maturité institutionnelle qui renforce la confiance.',
+        change:'Nommer les personnes qui siégeront au conseil, définir leur rôle réel, et prévoir explicitement ce qui se passerait si le porteur devait s\'arrêter temporairement ou définitivement.' }
+    ]
+  }
+];
+
+const PRIERE = [
+  { id:'P1', question:'Est-ce un appel, ou un désir&nbsp;?',
+    detail:'Si demain ce lieu se faisait sans moi, par d\'autres, en serais-je en paix — ou la blessure révèlerait-elle que je cherchais ma place plus que l\'œuvre&nbsp;?' },
+  { id:'P2', question:'Suis-je prêt à servir sans posséder&nbsp;?',
+    detail:'Si la mission s\'accomplit mieux sans que j\'en sois propriétaire (bail, convention, adossement à une fondation d\'Église), est-ce que je l\'accueille librement&nbsp;?' },
+  { id:'P3', question:'Suis-je prêt à recevoir une autorité au-dessus de moi&nbsp;?',
+    detail:'Confier le spirituel au diocèse, accepter des contre-pouvoirs, ne pas être à la fois le père et le patron — est-ce une libération ou un arrachement&nbsp;?' },
+  { id:'P4', question:'Est-ce que je fais reposer des personnes sur un équilibre que je sais fragile&nbsp;?',
+    detail:'La charité commence par ne pas exposer les autres à ma propre prise de risque. Des résidents, des salariés, des familles peuvent s\'engager sur la foi de ce projet.' },
+  { id:'P5', question:'Ce projet me met-il en paix dans la durée, ou dans une excitation qui retombe&nbsp;?',
+    detail:'Le bon esprit donne une joie qui demeure&nbsp;; l\'esprit mauvais, un enthousiasme qui s\'épuise aux premiers obstacles.' },
+  { id:'P6', question:'Suis-je prêt à entendre un « pas maintenant », voire un « non »&nbsp;?',
+    detail:'Le discernement n\'est vrai que si la réponse peut être de renoncer, ou d\'attendre. Un beau projet retardé et purifié vaut mieux qu\'un projet engagé sur des verrous non levés.' }
+];
+
+/* === RENDERING FUNCTIONS === */
+
+function renderQuestion(q, variant) {
+  const isVerrou = variant === 'verrou';
+  const isPriere = variant === 'priere';
+  const cardClass = isVerrou ? 'q-card q-card--verrou' : isPriere ? 'q-card q-card--priere' : 'q-card';
+  const states = isPriere
+    ? [['en-paix','En paix'],['explorer','À explorer'],['pas-encore','Pas encore']]
+    : [['clair','C\'est clair'],['creuser','À approfondir'],['pas-encore','Pas encore mûr']];
+
+  const whyHTML = (q.pourquoi || q.change) ? `
+  <div class="q-why">
+    ${q.pourquoi ? `<p class="q-why-text">${q.pourquoi}</p>` : ''}
+    ${q.change ? `<p class="q-change-text">${q.change}</p>` : ''}
+  </div>` : '';
+
+  return `
+<article class="${cardClass} fade-up" data-qid="${q.id}" role="group" aria-label="${q.question.replace(/<[^>]+>/g,'')}">
+  <h3 class="q-title">${q.question}</h3>
+  ${q.detail ? `<p class="q-detail">${q.detail}</p>` : ''}
+  <fieldset class="q-responses" id="resp-${q.id}">
+    <legend class="sr-only">Votre réponse</legend>
+    ${states.map(([val,lbl]) => `
+    <label class="resp-btn" data-qid="${q.id}" data-val="${val}">
+      <input type="radio" name="q-${q.id}" value="${val}" aria-label="${lbl}">
+      <span class="dot"></span>${lbl}
+    </label>`).join('')}
+  </fieldset>
+  ${whyHTML}
+  <div class="q-note-wrap">
+    <label class="q-note-label" for="note-${q.id}-ta">&#10002; Précisez votre réponse <span class="q-note-reco">— recommandé</span></label>
+    <textarea id="note-${q.id}-ta" class="q-note-input" data-qid="${q.id}" placeholder="Si c'est clair, notez la réponse ; sinon, ce qui reste à creuser…" rows="3" aria-label="Précisions pour cette question"></textarea>
+    <span class="q-note-nudge" hidden>Précisez votre réponse en quelques mots — c'est le cœur du discernement.</span>
+  </div>
+</article>`;
+}
+
+function renderVerrous() {
+  const el = document.getElementById('verrous');
+  el.innerHTML = `
+<div class="section-header">
+  <p class="section-label">Avant tout &mdash; environ 10 min</p>
+  <h2 class="section-title">Les 3 questions verrou</h2>
+  <p class="section-desc">Ces trois questions commandent tout le reste. Tant qu'elles n'ont pas de réponse claire et sereine, mieux vaut attendre avant d'engager quoi que ce soit — dépenses, actes juridiques ou communications.</p>
+</div>
+<div class="verrous-grid" style="padding:0 44px 44px">
+  ${VERROUS.map(v => renderQuestion(v,'verrou')).join('')}
+</div>`;
+}
+
+function renderTheme(theme) {
+  const el = document.getElementById(theme.id);
+  el.innerHTML = `
+<div class="section-header">
+  <p class="section-label">${theme.label} &mdash; ${theme.duree || '~8 min'}</p>
+  <h2 class="section-title">${theme.title}</h2>
+  <p class="section-desc">${theme.desc}</p>
+</div>
+<div class="questions-wrap">
+  ${theme.questions.map(q => renderQuestion(q,'theme')).join('')}
+</div>`;
+}
+
+function renderPriere() {
+  const el = document.getElementById('priere');
+  el.innerHTML = `
+<div class="section-header" style="padding-bottom:0">
+  <p class="section-label">Dans la prière / en conscience</p>
+  <h2 class="section-title">La part vocationnelle</h2>
+  <p class="section-desc">À reprendre dans le silence, seul et avec un accompagnateur. Sobrement, sans se mentir.</p>
+</div>
+<blockquote class="priere-quote">
+  « Un projet d'Église ne se décide pas comme un investissement&nbsp;: il se discerne. Mieux vaut un beau projet retardé et purifié qu'un projet engagé sur des verrous non levés. »
+</blockquote>
+<div class="priere-grid">
+  ${PRIERE.map(q => renderQuestion(q,'priere')).join('')}
+</div>
+<div class="priere-closing">
+  <p>Ces questions ne sont pas là pour décourager, mais pour que ce qui se fera tienne — devant les hommes et devant Dieu.</p>
+</div>`;
+}
+
+function renderSynthese() {
+  const el = document.getElementById('synthese');
+  el.innerHTML = `
+<div class="section-header" style="padding-left:0;padding-right:0">
+  <p class="section-label">Synthèse</p>
+  <h2 class="section-title">État du discernement</h2>
+  <p class="section-desc">Une lecture d'ensemble — pas un verdict, mais une carte honnête de là où on en est.</p>
+</div>
+<div id="synth-verrous" class="synthese-verrous"></div>
+<div id="synth-alert" class="synthese-alert"></div>
+<div class="synthese-overview">
+  <h3>Avancement par section</h3>
+  <div id="synth-overview"></div>
+</div>
+<div class="synthese-diagram">
+  <h3>L'ordre du discernement</h3>
+  <div class="diagram-steps">
+    <div class="diag-step">
+      <div class="diag-num">1</div>
+      <div class="diag-content">
+        <h4>Lever les 3 Verrous</h4>
+        <p>Appel d'Église / Œuvre ou entreprise / Posséder ou servir.</p>
+        <span class="diag-warning">Si l'un reste sans réponse claire → ne rien engager</span>
+      </div>
+    </div>
+    <div class="diag-connector">↓</div>
+    <div class="diag-step">
+      <div class="diag-num">2</div>
+      <div class="diag-content">
+        <h4>Sécuriser les conditions bloquantes</h4>
+        <p>Accord diocèse, qualification garde, montage fiscal, diagnostic technique, protection mineurs, mécénat amorcé, statut résidents.</p>
+      </div>
+    </div>
+    <div class="diag-connector">↓</div>
+    <div class="diag-step">
+      <div class="diag-num">3</div>
+      <div class="diag-content">
+        <h4>Trancher les décisions structurantes</h4>
+        <p>Structure d'œuvre, propriété/usage, qui détient les murs, rôle et pouvoir du porteur.</p>
+      </div>
+    </div>
+    <div class="diag-connector">↓</div>
+    <div class="diag-step">
+      <div class="diag-num">4</div>
+      <div class="diag-content">
+        <h4>Refaire le BP en hypothèses réalistes, puis décider le GO / NO-GO</h4>
+        <p>Avec toutes les provisions, les coûts réels et la trésorerie de sécurité.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="synthese-share" style="max-width:760px;margin:8px auto 24px;padding:24px 26px;background:rgba(200,144,43,.07);border:1px solid rgba(200,144,43,.28);border-radius:14px">
+  <h3 style="font-family:var(--font-serif);color:var(--ember-dk);font-size:1.25rem;margin:0 0 8px">Envoyer mes réponses</h3>
+  <p style="font-size:.875rem;color:var(--muted);line-height:1.6;margin:0 0 16px">Vos réponses restent sur votre appareil&nbsp;— rien n'est envoyé automatiquement. Choisissez comment les transmettre&nbsp;:</p>
+  <label style="display:block;font-size:.8125rem;color:var(--ink);margin-bottom:16px">Votre nom <span style="color:var(--muted)">(facultatif, pour savoir de qui viennent les réponses)</span>
+    <input type="text" id="resp-name" placeholder="Prénom Nom" style="display:block;width:100%;max-width:320px;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:.9rem;font-family:inherit;background:#fff;color:var(--ink)">
+  </label>
+  <div style="display:flex;flex-wrap:wrap;gap:10px">
+    <button class="btn-primary" onclick="sendByEmail()">&#9993;&nbsp; Envoyer par email</button>
+    <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="downloadRecap()">&#8595;&nbsp; Télécharger (.txt)</button>
+    <button class="btn-primary" style="background:transparent;color:var(--ember-dk);border:1.5px solid var(--ember)" onclick="copyRecap()">&#10697;&nbsp; Copier</button>
+  </div>
+  <p id="share-feedback" aria-live="polite" style="font-size:.8125rem;line-height:1.5;margin:14px 0 0;min-height:1em;color:var(--vert-dk)"></p>
+</div>
+<div class="synthese-actions">
+  <button class="btn-primary" onclick="window.print()">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 9h8v5H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    Imprimer / Exporter PDF
+  </button>
+  <button class="btn-danger" id="reset-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8a5 5 0 1 1 1.5 3.6M3 12V8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Réinitialiser
+  </button>
+</div>`;
+}
+
+/* === ENVOI DES RÉPONSES (sans serveur) === */
+const RECIPIENT_EMAIL = 'benoit.decuyper@gmail.com'; // <-- adresse qui reçoit les réponses
+
+function stripHTML(s){ const d=document.createElement('div'); d.innerHTML=s||''; return (d.textContent||'').replace(/\s+/g,' ').trim(); }
+
+function recapLineFor(item, out){
+  const a = STATE.answers[item.id];
+  out.push('• ' + stripHTML(item.question));
+  out.push('   -> ' + (a ? STATE_LABELS[a] : 'Non répondu'));
+  const n = (STATE.notes[item.id] || '').trim();
+  if (n) out.push('   Note : ' + n);
+  out.push('');
+}
+
+function buildRecap(){
+  const name = (document.getElementById('resp-name')?.value || '').trim();
+  const out = [];
+  out.push('FOYER DE FEU — Questionnaire de discernement');
+  if (name) out.push('Répondant : ' + name);
+  try { out.push('Date : ' + new Date().toLocaleString('fr-FR')); } catch(e) {}
+  out.push('');
+  out.push('=== LES 3 VERROUS ===');
+  out.push('');
+  VERROUS.forEach(v => recapLineFor(v, out));
+  THEMES.forEach(t => {
+    out.push('=== ' + t.num + '. ' + stripHTML(t.title) + ' ===');
+    out.push('');
+    t.questions.forEach(q => recapLineFor(q, out));
+  });
+  if (typeof PRIERE !== 'undefined' && PRIERE.length){
+    out.push('=== DANS LA PRIÈRE / EN CONSCIENCE ===');
+    out.push('');
+    PRIERE.forEach(q => recapLineFor(q, out));
+  }
+  return out.join('\n');
+}
+
+function shareFeedback(msg, warn){
+  const el = document.getElementById('share-feedback');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = warn ? 'var(--ember)' : 'var(--vert-dk)';
+}
+
+function sendByEmail(){
+  const name = (document.getElementById('resp-name')?.value || '').trim();
+  const subject = 'Foyer de feu — Discernement' + (name ? ' — ' + name : '');
+  const body = buildRecap();
+  const url = 'mailto:' + RECIPIENT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  if (url.length > 1900){
+    shareFeedback('Vos réponses sont longues : selon votre logiciel de mail, l\'email peut être tronqué. Si c\'est le cas, préférez « Télécharger » et joignez le fichier.', true);
+  } else {
+    shareFeedback('Ouverture de votre logiciel de mail…');
+  }
+  window.location.href = url;
+}
+
+function downloadRecap(){
+  const name = (document.getElementById('resp-name')?.value || '').trim().replace(/[^\w\-]+/g,'-');
+  const blob = new Blob([buildRecap()], { type:'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Discernement-Foyer-de-feu' + (name ? '-' + name : '') + '.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  shareFeedback('Récapitulatif téléchargé. Envoyez ce fichier par email ou messagerie à la personne qui centralise.');
+}
+
+function fallbackCopy(txt){
+  const ta = document.createElement('textarea');
+  ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); shareFeedback('Récapitulatif copié — collez-le où vous voulez (email, message…).'); }
+  catch(e) { shareFeedback('Impossible de copier automatiquement — utilisez plutôt « Télécharger ».', true); }
+  ta.remove();
+}
+
+function copyRecap(){
+  const txt = buildRecap();
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt)
+      .then(() => shareFeedback('Récapitulatif copié — collez-le où vous voulez (email, message…).'))
+      .catch(() => fallbackCopy(txt));
+  } else fallbackCopy(txt);
+}
+
+/* === STATE MANAGEMENT === */
+const LS_KEY = 'foyer-feu-discernement-v1';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || { answers:{}, notes:{} }; }
+  catch(e) { return { answers:{}, notes:{} }; }
+}
+
+function saveState(state) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+let STATE = loadState();
+
+function setAnswer(qid, val) {
+  STATE.answers[qid] = val;
+  saveState(STATE);
+  applyAnswer(qid, val);
+  updateNoteNudge(qid);
+  updateProgress();
+  updateVerrouIndicators();
+  updateSynthese();
+}
+
+function setNote(qid, text) {
+  STATE.notes[qid] = text;
+  saveState(STATE);
+  updateNoteNudge(qid);
+}
+
+function updateNoteNudge(qid) {
+  const card = document.querySelector(`[data-qid="${qid}"][class*="q-card"]`);
+  if (!card) return;
+  const answered = !!STATE.answers[qid];
+  const hasNote = !!(STATE.notes[qid] && STATE.notes[qid].trim());
+  const nudge = card.querySelector('.q-note-nudge');
+  if (answered && !hasNote) { card.classList.add('needs-note'); if (nudge) nudge.hidden = false; }
+  else { card.classList.remove('needs-note'); if (nudge) nudge.hidden = true; }
+}
+
+function applyAnswer(qid, val) {
+  // Update card state class
+  const card = document.querySelector(`[data-qid="${qid}"].q-card, [data-qid="${qid}"][class*="q-card"]`);
+  if (card) {
+    card.classList.remove('state-clair','state-creuser','state-pas-encore','state-en-paix','state-explorer');
+    if (val) card.classList.add('state-' + val);
+  }
+  // Update radio labels
+  document.querySelectorAll(`label.resp-btn[data-qid="${qid}"]`).forEach(lbl => {
+    lbl.classList.remove('checked-clair','checked-creuser','checked-pas-encore','checked-en-paix','checked-explorer');
+    const inp = lbl.querySelector('input');
+    if (inp && inp.value === val) {
+      inp.checked = true;
+      lbl.classList.add('checked-' + val);
+    } else if (inp) {
+      inp.checked = false;
+    }
+  });
+}
+
+function restoreAllAnswers() {
+  Object.entries(STATE.answers).forEach(([qid, val]) => { if (val) applyAnswer(qid, val); });
+  Object.entries(STATE.notes).forEach(([qid, text]) => {
+    if (!text) return;
+    const ta = document.querySelector(`textarea.q-note-input[data-qid="${qid}"]`);
+    if (ta) ta.value = text;
+  });
+  Object.keys(STATE.answers).forEach(qid => { if (STATE.answers[qid]) updateNoteNudge(qid); });
+}
+
+/* === PROGRESS === */
+function getAllQids() {
+  const ids = [];
+  VERROUS.forEach(v => ids.push(v.id));
+  THEMES.forEach(t => t.questions.forEach(q => ids.push(q.id)));
+  PRIERE.forEach(p => ids.push(p.id));
+  return ids;
+}
+
+function updateProgress() {
+  const all = getAllQids();
+  const answered = all.filter(id => STATE.answers[id]).length;
+  const pct = Math.round(answered / all.length * 100);
+  const fill = document.getElementById('progress-fill');
+  const label = document.getElementById('progress-label');
+  const track = fill && fill.parentElement;
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = answered + ' / ' + all.length;
+  if (track) track.setAttribute('aria-valuenow', pct);
+}
+
+function updateVerrouIndicators() {
+  VERROUS.forEach(v => {
+    const ind = document.getElementById('vi-' + v.id);
+    if (!ind) return;
+    const val = STATE.answers[v.id];
+    ind.className = 'v-ind' + (val ? ' state-' + val : '');
+  });
+}
+
+/* === VERROU SYNTHESIS UPDATE === */
+const VERROU_LABELS = { V1:'L\'appel d\'Église', V2:'Œuvre ou entreprise', V3:'Posséder ou servir' };
+const STATE_LABELS = { clair:'C\'est clair', creuser:'À approfondir', 'pas-encore':'Pas encore mûr', 'en-paix':'En paix', explorer:'À explorer', null:'Non répondu' };
+
+function updateSynthese() {
+  const vEl = document.getElementById('synth-verrous');
+  const alertEl = document.getElementById('synth-alert');
+  const ovEl = document.getElementById('synth-overview');
+  if (!vEl) return;
+
+  // Verrous cards
+  vEl.innerHTML = VERROUS.map(v => {
+    const val = STATE.answers[v.id] || null;
+    const stateClass = val ? val : 'unknown';
+    const stateLabel = val ? STATE_LABELS[val] : 'Non répondu';
+    return `<div class="synth-v-card">
+      <div class="sv-id">Verrou ${v.id}</div>
+      <p class="sv-q">${VERROU_LABELS[v.id]}</p>
+      <span class="sv-state ${stateClass}">${stateLabel}</span>
+    </div>`;
+  }).join('');
+
+  // Alert
+  const blocking = VERROUS.filter(v => STATE.answers[v.id] === 'pas-encore' || !STATE.answers[v.id]);
+  if (alertEl) {
+    if (blocking.length > 0) {
+      alertEl.innerHTML = '<strong>Points d\'attention :</strong> ' + blocking.length + ' verrou(s) restent à approfondir. ' +
+        'Prendre le temps de les clarifier avant d\'engager la suite — c\'est l\'objet de ce travail de discernement.';
+      alertEl.classList.add('visible');
+    } else {
+      alertEl.classList.remove('visible');
+    }
+  }
+
+  // Overview per section
+  if (ovEl) {
+    const sections = [
+      { label:'Les 3 Verrous', ids: VERROUS.map(v=>v.id) },
+      ...THEMES.map(t => ({ label: t.label + ' — ' + t.title, ids: t.questions.map(q=>q.id) })),
+      { label:'Dans la prière', ids: PRIERE.map(p=>p.id) }
+    ];
+    ovEl.innerHTML = sections.map(sec => {
+      const done = sec.ids.filter(id => STATE.answers[id]).length;
+      const total = sec.ids.length;
+      const pct = total ? Math.round(done/total*100) : 0;
+      return `<div class="tpr-row">
+        <span class="tpr-label">${sec.label}</span>
+        <div class="tpr-bar"><div class="tpr-fill" style="width:${pct}%"></div></div>
+        <span class="tpr-count">${done}/${total}</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+/* === SIDEBAR NAV HIGHLIGHT === */
+function updateSidebarNav() {
+  const sections = ['verrous','theme-1','theme-2','theme-3','theme-4','theme-5','theme-6','priere','synthese'];
+  const navItems = document.querySelectorAll('.snav-item');
+  let current = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) current = id;
+  });
+  navItems.forEach(a => {
+    const target = a.getAttribute('data-target');
+    a.classList.toggle('active', target === current);
+  });
+}
+
+/* === GLOSSARY DRAWER === */
+function buildGlossaryDrawer() {
+  const list = document.getElementById('gl-list');
+  if (!list) return;
+  let html = '';
+  Object.entries(GLOSSARY).forEach(([, section]) => {
+    html += `<div class="gl-section-head">${section.label}</div>`;
+    Object.entries(section.terms).forEach(([key, term]) => {
+      html += `<div class="gl-item" id="gl-${key}">
+        <div class="gl-item-label">${term.label}</div>
+        <div class="gl-item-clair">${term.clair}</div>
+        ${term.analogy ? `<div class="gl-item-analogy">Comme… ${term.analogy}</div>` : ''}
+        ${term.chez_nous ? `<div class="gl-item-chez">Chez nous : ${term.chez_nous}</div>` : ''}
+      </div>`;
+    });
+  });
+  list.innerHTML = html;
+}
+
+function openGlossary(key) {
+  document.getElementById('gl-drawer').classList.add('open');
+  document.getElementById('gl-drawer').setAttribute('aria-hidden','false');
+  document.getElementById('gl-overlay').classList.add('open');
+  document.getElementById('gl-overlay').setAttribute('aria-hidden','false');
+  if (key) {
+    setTimeout(() => {
+      const item = document.getElementById('gl-' + key);
+      if (item) item.scrollIntoView({ behavior:'smooth', block:'center' });
+    }, 150);
+  }
+}
+
+function closeGlossary() {
+  document.getElementById('gl-drawer').classList.remove('open');
+  document.getElementById('gl-drawer').setAttribute('aria-hidden','true');
+  document.getElementById('gl-overlay').classList.remove('open');
+  document.getElementById('gl-overlay').setAttribute('aria-hidden','true');
+}
+
+/* === TOOLTIP === */
+function findTermData(key) {
+  for (const section of Object.values(GLOSSARY)) {
+    if (section.terms && section.terms[key]) return section.terms[key];
+  }
+  return null;
+}
+
+let tooltipTimer;
+const tooltip = document.getElementById('term-tooltip');
+
+function showTooltip(key, targetEl) {
+  const data = findTermData(key);
+  if (!data) return;
+  tooltip.innerHTML = `
+    <div class="tt-label">${data.label}</div>
+    <div class="tt-clair">${data.clair}</div>
+    ${data.chez_nous ? `<div class="tt-chez"><div class="tt-sm">Chez nous</div>${data.chez_nous}</div>` : ''}`;
+  tooltip.setAttribute('aria-hidden','false');
+  positionTooltip(targetEl);
+  tooltip.classList.add('visible');
+}
+
+function positionTooltip(el) {
+  // tooltip en position:fixed => coordonnées VIEWPORT (pas de scrollX/scrollY)
+  const r = el.getBoundingClientRect();
+  const tw = 310;
+  tooltip.style.maxWidth = tw + 'px';
+  let left = r.left;
+  if (left + tw > window.innerWidth - 10) left = window.innerWidth - tw - 10;
+  if (left < 10) left = 10;
+  const ttH = tooltip.offsetHeight || 140;
+  let top = r.bottom + 8;
+  // si pas la place en dessous, on bascule au-dessus du terme
+  if (top + ttH > window.innerHeight - 10) {
+    top = r.top - ttH - 8;
+    if (top < 10) top = 10;
+  }
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+  tooltip.setAttribute('aria-hidden','true');
+}
+
+/* === EVENT DELEGATION === */
+function attachEvents() {
+  // Response buttons (radio)
+  document.addEventListener('change', e => {
+    const inp = e.target;
+    if (inp.type === 'radio' && inp.name && inp.name.startsWith('q-')) {
+      const qid = inp.name.replace('q-','');
+      setAnswer(qid, inp.value);
+    }
+  });
+
+  // Note toggle
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.q-note-toggle');
+    if (btn) {
+      const qid = btn.getAttribute('data-qid');
+      const noteDiv = document.getElementById('note-' + qid);
+      if (!noteDiv) return;
+      const isHidden = noteDiv.hidden;
+      noteDiv.hidden = !isHidden;
+      btn.setAttribute('aria-expanded', String(isHidden));
+      if (isHidden) noteDiv.querySelector('textarea').focus();
+    }
+  });
+
+  // Note input save
+  document.addEventListener('input', e => {
+    const ta = e.target;
+    if (ta.classList.contains('q-note-input')) {
+      const qid = ta.getAttribute('data-qid');
+      if (qid) setNote(qid, ta.value);
+    }
+  });
+
+  // Glossary open
+  document.getElementById('gl-btn').addEventListener('click', () => openGlossary());
+  document.getElementById('gl-close').addEventListener('click', closeGlossary);
+  document.getElementById('gl-overlay').addEventListener('click', closeGlossary);
+
+  // Reset
+  document.addEventListener('click', e => {
+    if (e.target.id === 'reset-btn' || e.target.closest('#reset-btn')) {
+      if (confirm('Réinitialiser toutes les réponses et notes ? Cette action est irréversible.')) {
+        STATE = { answers:{}, notes:{} };
+        saveState(STATE);
+        location.reload();
+      }
+    }
+  });
+
+  // Keyboard: ESC closes drawer/tooltip
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeGlossary(); hideTooltip(); }
+  });
+
+  // Click outside tooltip → hide
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.term') && !e.target.closest('#term-tooltip')) hideTooltip();
+  });
+
+  // Scroll: sidebar nav + fade-up
+  window.addEventListener('scroll', () => {
+    updateSidebarNav();
+    revealFadeUp();
+  }, { passive:true });
+}
+
+/* === TOOLTIP: délégation d'événements sur document (increvable) === */
+function attachTermTooltips() {
+  if (document._termDelegation) return; // une seule fois
+  document._termDelegation = true;
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest && e.target.closest('.term');
+    if (!el) return;
+    clearTimeout(tooltipTimer);
+    showTooltip(el.dataset.key, el);
+  });
+  document.addEventListener('mouseout', e => {
+    const el = e.target.closest && e.target.closest('.term');
+    if (!el) return;
+    tooltipTimer = setTimeout(hideTooltip, 320);
+  });
+  document.addEventListener('click', e => {
+    const el = e.target.closest && e.target.closest('.term');
+    if (!el) return;
+    e.stopPropagation();
+    if (tooltip.classList.contains('visible')) {
+      hideTooltip();
+    } else {
+      clearTimeout(tooltipTimer);
+      showTooltip(el.dataset.key, el);
+    }
+  });
+}
+
+/* === SCROLL REVEAL === */
+function revealFadeUp() {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+
+/* === INIT === */
+function init() {
+  // Render all sections
+  renderVerrous();
+  THEMES.forEach(t => renderTheme(t));
+  renderPriere();
+  renderSynthese();
+
+  // Build glossary drawer
+  buildGlossaryDrawer();
+
+  // Restore saved state
+  restoreAllAnswers();
+  updateProgress();
+  updateVerrouIndicators();
+  updateSynthese();
+
+  // Attach events
+  attachEvents();
+
+  // Attach tooltips to all .term elements (direct listeners — fiable desktop + mobile)
+  attachTermTooltips();
+
+  // Initial reveal
+  requestAnimationFrame(revealFadeUp);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
