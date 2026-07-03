@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Foyer de feu — Questionnaire de discernement (V1)</title>
+<title>Lumignis — Questionnaire de discernement (V1)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -367,7 +367,7 @@ button{cursor:pointer;font-family:inherit}
       </defs>
     </svg>
     <p class="hero-label">Outil de discernement interne</p>
-    <h1 class="hero-title">Foyer<br><em>de feu</em></h1>
+    <h1 class="hero-title">Lumignis</h1>
     <p class="hero-sub">Un support de discernement au sens fort — pour faire émerger la vérité du projet&nbsp;: ce qui est appel et ce qui est désir, ce qui est solide et ce qui est fragile.</p>
     <div class="hero-box">
       <p style="font-family:var(--font-serif);font-size:1.1875rem;color:var(--gold);margin-bottom:8px;font-weight:600">Comment utiliser ce questionnaire</p>
@@ -398,7 +398,7 @@ button{cursor:pointer;font-family:inherit}
 <!-- STICKY HEADER -->
 <header id="main-header">
   <div class="header-inner">
-    <a href="#hero" class="header-brand" aria-label="Foyer de feu — retour au début">
+    <a href="#hero" class="header-brand" aria-label="Lumignis — retour au début">
       <svg viewBox="0 0 18 28" fill="none" aria-hidden="true">
         <path d="M9 1C9 1 17 9 17 17C17 22 13.5 26 9 27.5C4.5 26 1 22 1 17C1 9 9 1 9 1Z" fill="url(#hg1)"/>
         <path d="M9 12C9 12 13 16.5 13 20C13 23 11.2 26 9 27C6.8 26 5 23 5 20C5 16.5 9 12 9 12Z" fill="url(#hg2)"/>
@@ -411,7 +411,7 @@ button{cursor:pointer;font-family:inherit}
           </linearGradient>
         </defs>
       </svg>
-      <span>Foyer de feu</span>
+      <span>Lumignis</span>
     </a>
     <div class="progress-wrap">
       <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progression du questionnaire">
@@ -453,13 +453,13 @@ button{cursor:pointer;font-family:inherit}
 </div>
 
 <footer class="site-footer">
-  <p><strong>Foyer de feu</strong> — outil de discernement interne &middot; V1 &middot; accompagne le cadrage, la revue critique et le glossaire. Document de travail confidentiel &mdash; ne pas diffuser.</p>
+  <p><strong>Lumignis</strong> — outil de discernement interne &middot; V1 &middot; accompagne le cadrage, la revue critique et le glossaire. Document de travail confidentiel &mdash; ne pas diffuser.</p>
 </footer>
 </div><!-- /#questionnaire-body -->
 
 <script>
 /* =========================================================
-   FOYER DE FEU — Questionnaire de discernement V1
+   Lumignis — Questionnaire de discernement V1
    ========================================================= */
 
 /* === GLOSSARY DATA === */
@@ -973,7 +973,7 @@ function recapLineFor(item, out){
 function buildRecap(){
   const name = (document.getElementById('resp-name')?.value || '').trim();
   const out = [];
-  out.push('FOYER DE FEU — Questionnaire de discernement');
+  out.push('Lumignis — Questionnaire de discernement');
   if (name) out.push('Répondant : ' + name);
   try { out.push('Date : ' + new Date().toLocaleString('fr-FR')); } catch(e) {}
   out.push('');
@@ -1002,7 +1002,7 @@ function shareFeedback(msg, warn){
 
 function sendByEmail(){
   const name = (document.getElementById('resp-name')?.value || '').trim();
-  const subject = 'Foyer de feu — Discernement' + (name ? ' — ' + name : '');
+  const subject = 'Lumignis — Discernement' + (name ? ' — ' + name : '');
   const body = buildRecap();
   const url = 'mailto:' + RECIPIENT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   if (url.length > 1900){
@@ -1018,7 +1018,7 @@ function downloadRecap(){
   const blob = new Blob([buildRecap()], { type:'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'Discernement-Foyer-de-feu' + (name ? '-' + name : '') + '.txt';
+  a.download = 'Discernement-Lumignis' + (name ? '-' + name : '') + '.txt';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   shareFeedback('Récapitulatif téléchargé. Envoyez ce fichier par email ou messagerie à la personne qui centralise.');
@@ -1043,7 +1043,7 @@ function copyRecap(){
 }
 
 /* === STATE MANAGEMENT === */
-const LS_KEY = 'foyer-feu-discernement-v1';
+const LS_KEY = 'lumignis-discernement-v1';
 
 function loadState() {
   try { return JSON.parse(localStorage.getItem(LS_KEY)) || { answers:{}, notes:{}, name:'' }; }
